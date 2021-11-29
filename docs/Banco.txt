@@ -1,0 +1,29 @@
+-- Cliente --
+
+- ID;
+- Data de nascimento;
+- Nome;
+- CPF;
+- E-mail;
+- Status:
+	- Ativo,
+	- Inativo;
+- Data de cadastro do cliente;
+- Data de alteração;
+	
+- Endereço:
+	- Cep,
+	- Rua/avenida/travessa;
+	- Bairro,
+	- Cidade,
+	- Estado,
+	- Complemento;	
+
+- Telefone:
+	- ID;
+	- Número;
+		- DDD;
+	- Tipo: 
+		- Móvel,
+		- Fixo,
+		- Recado;	
