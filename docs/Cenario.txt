@@ -1,0 +1,31 @@
+-- Cliente --
+
+Cenário 1
+
+- ID - Único, autoincrement e obrigatório;
+- Data de nascimento;
+- Nome - Obrigatório;
+- CPF - Obrigatório e válido;
+- E-mail;
+- Status:
+	- Ativo,
+	- Inativo;
+- Data de cadastro do cliente - Obrigatório, hora atual;
+- Data de alteração;
+	
+- Endereço:
+	- Cep - Obrigatório,
+	- Rua/avenida/travessa;
+	- Bairro,
+	- Cidade,
+	- Estado,
+	- Complemento;	
+
+- Telefone:
+	- ID;
+	- Número - Pelo menos 1 número deve ser cadastrado;
+		- DDD;
+	- Tipo: 
+		- Móvel,
+		- Fixo,
+		- Recado;	
