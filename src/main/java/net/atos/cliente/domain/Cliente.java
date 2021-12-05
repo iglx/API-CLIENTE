@@ -3,24 +3,42 @@ package net.atos.cliente.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotNull;
+
 public class Cliente {
+	
+	@NotNull(message="Campo: cadastroData não pode ser nulo")
 	private LocalDate dataCadastro;
+	
+	@NotNull(message="Campo: DataAlteracao não pode ser nulo")
 	private LocalDateTime dataAlteracao;
 	
+	@NotNull(message="status do cliente não pode ser nulo")
 	private Status status;
 	
+	@NotNull(message="nome não pode ser nulo")
 	private String nome;
+	@NotNull(message="cpf não pode ser nulo")
 	private String cpf;
+	@NotNull(message="e-mail não pode ser nulo")
 	private String email;
+	@NotNull(message="telefone não pode ser nulo")
 	private String telefone;
+	@NotNull(message="celular não pode ser nulo")
 	private String celular;
+	@NotNull(message="nascimento não pode ser nulo")
 	private String nascimento;
-	
+	@NotNull(message="logradouro não pode ser nulo")
 	private String logradouro;
+	@NotNull(message="bairro não pode ser nulo")
 	private String bairro;
+	@NotNull(message="cidade não pode ser nulo")
 	private String cidade;
+	@NotNull(message="estado não pode ser nulo")
 	private String estado;
+	@NotNull(message="cep não pode ser nulo")
 	private String cep;
+	@NotNull(message="complemento não pode ser nulo")
 	private String complemento;
 	
 	public LocalDate getDataCadastro() {
