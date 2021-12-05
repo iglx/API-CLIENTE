@@ -12,17 +12,22 @@ import javax.ws.rs.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import net.atos.cliente.domain.Cliente;
+import net.atos.cliente.repository.ClienteRepository;
+import net.atos.cliente.repository.entity.ClienteEntity;
 
 @Service
 public class CadastrarCliente {
 	
 	private Validator validator;
 	
-	public CadastrarCliente(Validator v) {
+	private ClienteRepository clienteRepository;
+	
+	public CadastrarCliente(Validator v, ClienteRepository repository) {
 		this.validator = v;
+		this.clienteRepository = repository;
 	}
 
-	public void persistir(@NotNull(message = "Cadastro não pode ser null") Cliente cliente) {
+	public Cliente persistir(@NotNull(message = "Cadastro não pode ser null") Cliente cliente) {
 		
 		Set<ConstraintViolation<Cliente>>
 			validate = this.validator.validate(cliente);
@@ -34,6 +39,30 @@ public class CadastrarCliente {
 		if(!cliente.getDataCadastro().isEqual(LocalDate.now())) {
 			throw new BadRequestException("A data do cadastro deve ser atual");
 		}
-	}
+		
+		ClienteEntity clienteEntity = new ClienteEntity();
+		clienteEntity.setDataCadastro(cliente.getDataCadastro());
+		clienteEntity.setDataAlteracao(cliente.getDataAlteracao());
+		clienteEntity.setStatus(cliente.getStatus());
+		clienteEntity.setNome(cliente.getNome());
+		clienteEntity.setCpf(cliente.getCpf());
+		clienteEntity.setEmail(cliente.getEmail());
+		clienteEntity.setTelefone(cliente.getTelefone());
+		clienteEntity.setCelular(cliente.getCelular());
+		clienteEntity.setNascimento(cliente.getNascimento());
+		clienteEntity.setLogradouro(cliente.getLogradouro());
+		clienteEntity.setBairro(cliente.getBairro());
+		clienteEntity.setCidade(cliente.getCidade());
+		clienteEntity.setEstado(cliente.getEstado());
+		clienteEntity.setCep(cliente.getCep());
+		clienteEntity.setComplemento(cliente.getComplemento());
+		
+		clienteRepository.save(clienteEntity);
+		
+		cliente.setId(clienteEntity.getId());
+		
+		return cliente;
 	
+	}
 }
+

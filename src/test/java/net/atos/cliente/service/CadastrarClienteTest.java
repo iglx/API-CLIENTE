@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.times;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,10 +28,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import net.atos.cliente.domain.Cliente;
 import net.atos.cliente.domain.Status;
+import net.atos.cliente.repository.ClienteRepository;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(Lifecycle.PER_CLASS)
@@ -37,6 +42,7 @@ class CadastrarClienteTest {
 	private CadastrarCliente cadastrarCliente;
 	
 	private Validator validator;
+	private ClienteRepository clienteRepository;
 	
 	@BeforeAll
 	public void iniciarTesteGeral() {
@@ -48,7 +54,10 @@ class CadastrarClienteTest {
 	
 	@BeforeEach
 	public void iniciarTeste() {
-		cadastrarCliente = new CadastrarCliente(validator);
+		
+		this.clienteRepository = Mockito.mock(ClienteRepository.class);
+		
+		cadastrarCliente = new CadastrarCliente(validator, clienteRepository);
 	}
 	
 	@Test
@@ -127,6 +136,34 @@ class CadastrarClienteTest {
 		var assertThrows = assertThrows(BadRequestException.class, () -> cadastrarCliente.persistir(cliente));
 		
 		assertEquals("A data do cadastro deve ser atual", assertThrows.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Teste de persistência do cadastro")
+	public void test_dados_preenchidos_cadastroCriado() {
+		
+		assertNotNull(cadastrarCliente);
+		
+		Cliente cliente = new Cliente();
+		cliente.setDataCadastro(LocalDate.now());
+		cliente.setDataAlteracao(LocalDateTime.now());
+		cliente.setStatus(Status.INATIVO);
+		cliente.setNome("Nome do cliente");
+		cliente.setCpf("000.000.000-99");
+		cliente.setEmail("teste@email.com.br");
+		cliente.setTelefone("(99) 9999-9999");
+		cliente.setCelular("(99) 9 9999-9999");
+		cliente.setNascimento("01/01/1901");
+		cliente.setLogradouro("Rua do Brasil, 1500");
+		cliente.setBairro("Vila Brasil");
+		cliente.setCidade("Java");
+		cliente.setEstado("Brasil");
+		cliente.setCep("01234-567");
+		cliente.setComplemento("Clube dos Javeiros");
+		
+		cadastrarCliente.persistir(cliente);
+		
+		then(clienteRepository).should(times(1)).save(any());
 	}
 
 }
