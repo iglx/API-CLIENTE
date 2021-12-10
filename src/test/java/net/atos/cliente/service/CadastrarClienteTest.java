@@ -32,6 +32,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import net.atos.cliente.domain.Cliente;
+import net.atos.cliente.domain.Item;
 import net.atos.cliente.domain.Status;
 import net.atos.cliente.repository.ClienteRepository;
 
@@ -85,7 +86,7 @@ class CadastrarClienteTest {
 		var assertThrows = assertThrows(ConstraintViolationException.class, () ->
 			cadastrarCliente.persistir(cliente));
 		
-		assertEquals(15, assertThrows.getConstraintViolations().size());
+		assertEquals(14, assertThrows.getConstraintViolations().size());
 		List<String> mensagens = assertThrows.getConstraintViolations()
 			.stream()
 			.map(ConstraintViolation::getMessage)
@@ -98,15 +99,53 @@ class CadastrarClienteTest {
 				"nome não pode ser nulo",
 				"cpf não pode ser nulo",
 				"e-mail não pode ser nulo",
-				"telefone não pode ser nulo",
-				"celular não pode ser nulo",
 				"nascimento não pode ser nulo",
 				"logradouro não pode ser nulo",
 				"bairro não pode ser nulo",
 				"cidade não pode ser nulo",
 				"estado não pode ser nulo",
 				"cep não pode ser nulo",
-				"complemento não pode ser nulo"
+				"complemento não pode ser nulo",
+				"Pelo menos um número de contato deve ser cadastrado"
+				));
+	}
+	
+	@Test
+	@DisplayName("contato não cadastrado")
+	public void test_contato_null_lancarExcessao() {
+		
+		assertNotNull(cadastrarCliente);
+		
+		Cliente cliente = new Cliente();
+		cliente.setDataCadastro(LocalDate.now());
+		cliente.setDataAlteracao(LocalDateTime.now());
+		cliente.setStatus(Status.INATIVO);
+		cliente.setNome("Nome do cliente");
+		cliente.setCpf("000.000.000-99");
+		cliente.setEmail("teste@email.com.br");
+		cliente.setNascimento("01/01/1901");
+		cliente.setLogradouro("Rua do Brasil, 1500");
+		cliente.setBairro("Vila Brasil");
+		cliente.setCidade("Java");
+		cliente.setEstado("Brasil");
+		cliente.setCep("01234-567");
+		cliente.setComplemento("Clube dos Javeiros");
+		
+		Item item = new Item(); 
+		cliente.add(item);
+		
+		var assertThrows = assertThrows(ConstraintViolationException.class, () ->
+		cadastrarCliente.persistir(cliente));
+		
+		assertEquals(2, assertThrows.getConstraintViolations().size());
+		List<String> mensagens = assertThrows.getConstraintViolations()
+			.stream()
+			.map(ConstraintViolation::getMessage)
+			.collect(Collectors.toList());
+		
+		assertThat(mensagens, hasItems(
+				"O número de telefone deve ser cadastrado",
+				"O celular deve ser cadastrado"
 				));
 	}
 	
@@ -123,8 +162,7 @@ class CadastrarClienteTest {
 		cliente.setNome("Nome do cliente");
 		cliente.setCpf("000.000.000-99");
 		cliente.setEmail("teste@email.com.br");
-		cliente.setTelefone("(99) 9999-9999");
-		cliente.setCelular("(99) 9 9999-9999");
+
 		cliente.setNascimento("01/01/1901");
 		cliente.setLogradouro("Rua do Brasil, 1500");
 		cliente.setBairro("Vila Brasil");
@@ -132,6 +170,11 @@ class CadastrarClienteTest {
 		cliente.setEstado("Brasil");
 		cliente.setCep("01234-567");
 		cliente.setComplemento("Clube dos Javeiros");
+		
+		Item item = new Item(); 
+		item.setTelefone("(99) 9999-9999");
+		item.setCelular("(99) 9 9999-9999");
+		cliente.add(item);
 		
 		var assertThrows = assertThrows(BadRequestException.class, () -> cadastrarCliente.persistir(cliente));
 		
@@ -151,8 +194,7 @@ class CadastrarClienteTest {
 		cliente.setNome("Nome do cliente");
 		cliente.setCpf("000.000.000-99");
 		cliente.setEmail("teste@email.com.br");
-		cliente.setTelefone("(99) 9999-9999");
-		cliente.setCelular("(99) 9 9999-9999");
+
 		cliente.setNascimento("01/01/1901");
 		cliente.setLogradouro("Rua do Brasil, 1500");
 		cliente.setBairro("Vila Brasil");
@@ -160,6 +202,11 @@ class CadastrarClienteTest {
 		cliente.setEstado("Brasil");
 		cliente.setCep("01234-567");
 		cliente.setComplemento("Clube dos Javeiros");
+		
+		Item item = new Item(); 
+		item.setTelefone("(99) 9999-9999");
+		item.setCelular("(99) 9 9999-9999");
+		cliente.add(item);
 		
 		cadastrarCliente.persistir(cliente);
 		

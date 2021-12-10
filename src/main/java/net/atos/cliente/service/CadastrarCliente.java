@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.BadRequestException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import net.atos.cliente.domain.Cliente;
 import net.atos.cliente.repository.ClienteRepository;
@@ -40,6 +41,12 @@ public class CadastrarCliente {
 			throw new BadRequestException("A data do cadastro deve ser atual");
 		}
 		
+		if (ObjectUtils.isEmpty(cliente.getItens()) || cliente.getItens().size() < 1) {
+			throw new BadRequestException("número de contato deve ser cadastrado");
+		}
+		
+	//	cliente.getItens().forEach(item -> this.validaItem(item));
+		
 		ClienteEntity clienteEntity = new ClienteEntity();
 		clienteEntity.setDataCadastro(cliente.getDataCadastro());
 		clienteEntity.setDataAlteracao(cliente.getDataAlteracao());
@@ -47,8 +54,7 @@ public class CadastrarCliente {
 		clienteEntity.setNome(cliente.getNome());
 		clienteEntity.setCpf(cliente.getCpf());
 		clienteEntity.setEmail(cliente.getEmail());
-		clienteEntity.setTelefone(cliente.getTelefone());
-		clienteEntity.setCelular(cliente.getCelular());
+
 		clienteEntity.setNascimento(cliente.getNascimento());
 		clienteEntity.setLogradouro(cliente.getLogradouro());
 		clienteEntity.setBairro(cliente.getBairro());
@@ -64,5 +70,15 @@ public class CadastrarCliente {
 		return cliente;
 	
 	}
+	
+	/*
+	private void validaItem(Item item) {
+		Optional.ofNullable(item.getTelefone())
+		.orElseThrow(() -> new BadRequestException("O número de telefone deve ser cadastrado"));
+		
+		Optional.ofNullable(item.getCelular())
+		.orElseThrow(() -> new BadRequestException("O celular deve ser cadastrado"));
+	}
+	*/
 }
 
