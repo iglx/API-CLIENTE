@@ -2,8 +2,13 @@ package net.atos.cliente.domain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Cliente {
 	
@@ -24,12 +29,9 @@ public class Cliente {
 	private String cpf;
 	@NotNull(message="e-mail não pode ser nulo")
 	private String email;
-	@NotNull(message="telefone não pode ser nulo")
-	private String telefone;
-	@NotNull(message="celular não pode ser nulo")
-	private String celular;
 	@NotNull(message="nascimento não pode ser nulo")
 	private String nascimento;
+	
 	@NotNull(message="logradouro não pode ser nulo")
 	private String logradouro;
 	@NotNull(message="bairro não pode ser nulo")
@@ -42,6 +44,11 @@ public class Cliente {
 	private String cep;
 	@NotNull(message="complemento não pode ser nulo")
 	private String complemento;
+	
+	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
+	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
+	@Valid
+	private List<Item> itens;
 	
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
@@ -89,22 +96,6 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getCelular() {
-		return celular;
-	}
-
-	public void setCelular(String celular) {
-		this.celular = celular;
 	}
 
 	public String getNascimento() {
@@ -171,4 +162,20 @@ public class Cliente {
 		this.id = id;
 	}
 
+	public List<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
+
+	public void add(Item item) {
+		List<Item> itensLocal =
+				Optional.ofNullable(this.getItens()).orElseGet(() -> new ArrayList());
+		itensLocal.add(item);
+		
+		this.itens = itensLocal;
+	}
+	
 }
