@@ -2,12 +2,20 @@ package net.atos.cliente.repository.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import net.atos.cliente.domain.Status;
 
@@ -29,6 +37,7 @@ public class ClienteEntity {
 	
 	@Column(name = "STATUS")
 	@NotNull(message="status do cliente não pode ser nulo")
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	
 	@Column(name = "NOME")
@@ -42,14 +51,6 @@ public class ClienteEntity {
 	@Column(name = "EMAIL")
 	@NotNull(message="e-mail não pode ser nulo")
 	private String email;
-	
-	@Column(name = "TELEFONE")
-	@NotNull(message="telefone não pode ser nulo")
-	private String telefone;
-	
-	@Column(name = "CELULAR")
-	@NotNull(message="celular não pode ser nulo")
-	private String celular;
 	
 	@Column(name = "NASCIMENTO")
 	@NotNull(message="nascimento não pode ser nulo")
@@ -78,6 +79,12 @@ public class ClienteEntity {
 	@Column(name = "COMPLEMENTO")
 	@NotNull(message="complemento não pode ser nulo")
 	private String complemento;
+	
+	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
+	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
+	@Valid
+	@OneToMany(mappedBy = "id.cliente")
+	private List<ItemEntity> itens;
 	
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
@@ -125,22 +132,6 @@ public class ClienteEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getCelular() {
-		return celular;
-	}
-
-	public void setCelular(String celular) {
-		this.celular = celular;
 	}
 
 	public String getNascimento() {
@@ -205,6 +196,22 @@ public class ClienteEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public List<ItemEntity> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemEntity> itens) {
+		this.itens = itens;
+	}
+
+	public void add(ItemEntity item) {
+		List<ItemEntity> itensLocal =
+				Optional.ofNullable(this.getItens()).orElseGet(() -> new ArrayList());
+		itensLocal.add(item);
+		
+		this.itens = itensLocal;
 	}
 
 }

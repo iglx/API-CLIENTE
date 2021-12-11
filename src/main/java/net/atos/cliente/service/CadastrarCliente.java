@@ -2,6 +2,7 @@ package net.atos.cliente.service;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -13,8 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import net.atos.cliente.domain.Cliente;
+import net.atos.cliente.domain.Item;
 import net.atos.cliente.repository.ClienteRepository;
 import net.atos.cliente.repository.entity.ClienteEntity;
+import net.atos.cliente.repository.entity.ItemEntity;
+import net.atos.cliente.repository.entity.ItemPK;
 
 @Service
 public class CadastrarCliente {
@@ -45,7 +49,6 @@ public class CadastrarCliente {
 			throw new BadRequestException("número de contato deve ser cadastrado");
 		}
 		
-	//	cliente.getItens().forEach(item -> this.validaItem(item));
 		
 		ClienteEntity clienteEntity = new ClienteEntity();
 		clienteEntity.setDataCadastro(cliente.getDataCadastro());
@@ -54,7 +57,6 @@ public class CadastrarCliente {
 		clienteEntity.setNome(cliente.getNome());
 		clienteEntity.setCpf(cliente.getCpf());
 		clienteEntity.setEmail(cliente.getEmail());
-
 		clienteEntity.setNascimento(cliente.getNascimento());
 		clienteEntity.setLogradouro(cliente.getLogradouro());
 		clienteEntity.setBairro(cliente.getBairro());
@@ -62,6 +64,10 @@ public class CadastrarCliente {
 		clienteEntity.setEstado(cliente.getEstado());
 		clienteEntity.setCep(cliente.getCep());
 		clienteEntity.setComplemento(cliente.getComplemento());
+		
+		AtomicInteger numeroItem = new AtomicInteger();
+		cliente.getItens().stream().forEach(item ->
+			this.construirItem(clienteEntity, numeroItem, item));
 		
 		clienteRepository.save(clienteEntity);
 		
@@ -71,14 +77,16 @@ public class CadastrarCliente {
 	
 	}
 	
-	/*
-	private void validaItem(Item item) {
-		Optional.ofNullable(item.getTelefone())
-		.orElseThrow(() -> new BadRequestException("O número de telefone deve ser cadastrado"));
+	private void construirItem(ClienteEntity clienteEntity, AtomicInteger numeroItem, Item item) {
+		ItemEntity itemEntity = new ItemEntity();
+		itemEntity.setId(new ItemPK());
+		itemEntity.getId().setNumeroItem(numeroItem.incrementAndGet());
+		itemEntity.getId().setCliente(clienteEntity);
+		itemEntity.setTelefone(item.getTelefone());
+		itemEntity.setCelular(item.getCelular());
 		
-		Optional.ofNullable(item.getCelular())
-		.orElseThrow(() -> new BadRequestException("O celular deve ser cadastrado"));
+		clienteEntity.add(itemEntity);
 	}
-	*/
+	
 }
 
