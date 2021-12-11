@@ -205,7 +205,7 @@ class CadastrarClienteTest {
 		
 		Item item = new Item(); 
 		item.setTelefone("(99) 9999-9999");
-		item.setCelular("(99) 9 9999-9999");
+		item.setCelular("(99) 93000-4444");
 		cliente.add(item);
 		
 		cadastrarCliente.persistir(cliente);
