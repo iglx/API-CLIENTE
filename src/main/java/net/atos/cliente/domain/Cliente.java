@@ -32,23 +32,14 @@ public class Cliente {
 	@NotNull(message="nascimento não pode ser nulo")
 	private String nascimento;
 	
-	@NotNull(message="logradouro não pode ser nulo")
-	private String logradouro;
-	@NotNull(message="bairro não pode ser nulo")
-	private String bairro;
-	@NotNull(message="cidade não pode ser nulo")
-	private String cidade;
-	@NotNull(message="estado não pode ser nulo")
-	private String estado;
-	@NotNull(message="cep não pode ser nulo")
-	private String cep;
-	@NotNull(message="complemento não pode ser nulo")
-	private String complemento;
+	@NotNull(message = "Pelo menos um endereço deve ser cadastrado")
+	@Valid
+	private List<Endereco> enderecos;
 	
 	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
 	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
 	@Valid
-	private List<Item> itens;
+	private List<Contato> contatos;
 	
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
@@ -106,54 +97,6 @@ public class Cliente {
 		this.nascimento = nascimento;
 	}
 
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -161,21 +104,37 @@ public class Cliente {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public List<Item> getItens() {
-		return itens;
+	
+	public List<Endereco> getEnderecos() {
+		return enderecos;
 	}
 
-	public void setItens(List<Item> itens) {
-		this.itens = itens;
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 
-	public void add(Item item) {
-		List<Item> itensLocal =
-				Optional.ofNullable(this.getItens()).orElseGet(() -> new ArrayList());
-		itensLocal.add(item);
+	public List<Contato> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(List<Contato> contatos) {
+		this.contatos = contatos;
+	}
+	
+	public void addEndereco(Endereco endereco) {
+		List<Endereco> enderecosLocal =
+				Optional.ofNullable(this.getEnderecos()).orElseGet(() -> new ArrayList());
+		enderecosLocal.add(endereco);
 		
-		this.itens = itensLocal;
+		this.enderecos = enderecosLocal;
+	}
+
+	public void addContato(Contato contato) {
+		List<Contato> contatosLocal =
+				Optional.ofNullable(this.getContatos()).orElseGet(() -> new ArrayList());
+		contatosLocal.add(contato);
+		
+		this.contatos = contatosLocal;
 	}
 	
 }

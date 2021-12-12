@@ -56,35 +56,17 @@ public class ClienteEntity {
 	@NotNull(message="nascimento não pode ser nulo")
 	private String nascimento;
 	
-	@Column(name = "LOGRADOURO")
-	@NotNull(message="logradouro não pode ser nulo")
-	private String logradouro;
-	
-	@Column(name = "BAIRRO")
-	@NotNull(message="bairro não pode ser nulo")
-	private String bairro;
-	
-	@Column(name = "CIDADE")
-	@NotNull(message="cidade não pode ser nulo")
-	private String cidade;
-	
-	@Column(name = "ESTADO")
-	@NotNull(message="estado não pode ser nulo")
-	private String estado;
-	
-	@Column(name = "CEP")
-	@NotNull(message="cep não pode ser nulo")
-	private String cep;
-	
-	@Column(name = "COMPLEMENTO")
-	@NotNull(message="complemento não pode ser nulo")
-	private String complemento;
+	@NotNull(message = "Pelo menos um endereço deve ser cadastrado")
+	@Size(min = 1, message = "Pelo menos um endereço deve ser cadastrado")
+	@Valid
+	@OneToMany(mappedBy = "id.cliente")
+	private List<EnderecoEntity> enderecos;
 	
 	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
 	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
 	@Valid
 	@OneToMany(mappedBy = "id.cliente")
-	private List<ItemEntity> itens;
+	private List<ContatoEntity> contatos;
 	
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
@@ -142,54 +124,6 @@ public class ClienteEntity {
 		this.nascimento = nascimento;
 	}
 
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -198,20 +132,36 @@ public class ClienteEntity {
 		this.id = id;
 	}
 	
-	public List<ItemEntity> getItens() {
-		return itens;
+	public List<EnderecoEntity> getEnderecos() {
+		return enderecos;
 	}
 
-	public void setItens(List<ItemEntity> itens) {
-		this.itens = itens;
+	public void setEnderecos(List<EnderecoEntity> enderecos) {
+		this.enderecos = enderecos;
+	}
+	
+	public List<ContatoEntity> getContatos() {
+		return contatos;
 	}
 
-	public void add(ItemEntity item) {
-		List<ItemEntity> itensLocal =
-				Optional.ofNullable(this.getItens()).orElseGet(() -> new ArrayList());
-		itensLocal.add(item);
+	public void setContatos(List<ContatoEntity> contatos) {
+		this.contatos = contatos;
+	}
+
+	public void addEndereco(EnderecoEntity endereco) {
+		List<EnderecoEntity> enderecosLocal =
+				Optional.ofNullable(this.getEnderecos()).orElseGet(() -> new ArrayList());
+		enderecosLocal.add(endereco);
 		
-		this.itens = itensLocal;
+		this.enderecos = enderecosLocal;
+	}
+
+	public void addContato(ContatoEntity contato) {
+		List<ContatoEntity> contatosLocal =
+				Optional.ofNullable(this.getContatos()).orElseGet(() -> new ArrayList());
+		contatosLocal.add(contato);
+		
+		this.contatos = contatosLocal;
 	}
 
 }
