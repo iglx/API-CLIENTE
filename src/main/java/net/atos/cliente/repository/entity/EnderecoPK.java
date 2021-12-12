@@ -6,21 +6,21 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Embeddable
-public class ItemPK {
+public class EnderecoPK {
 
-	@Column(name = "NR_ITEM")
-	@NotNull(message = "N° do Item não pode ser nulo")
-	private Integer numeroItem;
+	@Column(name = "ENDERECO")
+	@NotNull(message = "Endereço não pode ser nulo")
+	private Integer numeroEndereco;
 	
 	@ManyToOne
 	private ClienteEntity cliente;
 
-	public Integer getNumeroItem() {
-		return numeroItem;
+	public Integer getNumeroEndereco() {
+		return numeroEndereco;
 	}
 
-	public void setNumeroItem(Integer numeroItem) {
-		this.numeroItem = numeroItem;
+	public void setNumeroEndereco(Integer numeroEndereco) {
+		this.numeroEndereco = numeroEndereco;
 	}
 
 	public ClienteEntity getCliente() {
