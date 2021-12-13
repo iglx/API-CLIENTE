@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import net.atos.cliente.domain.Status;
+import net.atos.cliente.domain.StatusEnum;
 
 @Entity
 @Table(name = "TB_CLIENTE")
@@ -38,7 +38,7 @@ public class ClienteEntity {
 	@Column(name = "STATUS")
 	@NotNull(message="status do cliente não pode ser nulo")
 	@Enumerated(EnumType.STRING)
-	private Status status;
+	private StatusEnum status;
 	
 	@Column(name = "NOME")
 	@NotNull(message="nome não pode ser nulo")
@@ -60,7 +60,7 @@ public class ClienteEntity {
 	@Size(min = 1, message = "Pelo menos um endereço deve ser cadastrado")
 	@Valid
 	@OneToMany(mappedBy = "id.cliente")
-	private List<EnderecoEntity> enderecos;
+	private EnderecoEntity enderecos;
 	
 	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
 	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
@@ -84,11 +84,11 @@ public class ClienteEntity {
 		this.dataAlteracao = dataAlteracao;
 	}
 
-	public Status getStatus() {
+	public StatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(StatusEnum status) {
 		this.status = status;
 	}
 
@@ -132,28 +132,20 @@ public class ClienteEntity {
 		this.id = id;
 	}
 	
-	public List<EnderecoEntity> getEnderecos() {
+	public EnderecoEntity getEnderecos() {
 		return enderecos;
 	}
 
-	public void setEnderecos(List<EnderecoEntity> enderecos) {
-		this.enderecos = enderecos;
+	public void setEnderecos(EnderecoEntity endereco) {
+		this.enderecos = endereco;
 	}
-	
+
 	public List<ContatoEntity> getContatos() {
 		return contatos;
 	}
 
 	public void setContatos(List<ContatoEntity> contatos) {
 		this.contatos = contatos;
-	}
-
-	public void addEndereco(EnderecoEntity endereco) {
-		List<EnderecoEntity> enderecosLocal =
-				Optional.ofNullable(this.getEnderecos()).orElseGet(() -> new ArrayList());
-		enderecosLocal.add(endereco);
-		
-		this.enderecos = enderecosLocal;
 	}
 
 	public void addContato(ContatoEntity contato) {

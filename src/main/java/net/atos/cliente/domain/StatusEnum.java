@@ -1,6 +1,6 @@
 package net.atos.cliente.domain;
 
-public enum Status {
+public enum StatusEnum {
 	ATIVO,
 	INATIVO;
 }

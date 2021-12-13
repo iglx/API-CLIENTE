@@ -4,22 +4,28 @@ import javax.validation.constraints.NotNull;
 
 public class Contato {
 	
-	@NotNull(message = "O número de telefone deve ser cadastrado")
-	private String telefone;
-	@NotNull(message = "O celular deve ser cadastrado")
-	private String celular;
 	
-	public String getTelefone() {
-		return telefone;
+	@NotNull(message="tipo de contato do cliente não pode ser nulo")
+	private TipoContatoEnum tipoContato;
+	
+	@NotNull(message="número não pode ser nulo")
+	private String numero;
+
+
+	public TipoContatoEnum getTipoContato() {
+		return tipoContato;
 	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+
+	public void setTipoContato(TipoContatoEnum tipoContato) {
+		this.tipoContato = tipoContato;
 	}
-	public String getCelular() {
-		return celular;
+
+	public String getNumero() {
+		return numero;
 	}
-	public void setCelular(String celular) {
-		this.celular = celular;
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 }

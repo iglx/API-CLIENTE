@@ -2,8 +2,12 @@ package net.atos.cliente.domain;
 
 import javax.validation.constraints.NotNull;
 
+import net.atos.cliente.repository.entity.EnderecoPK;
+
 public class Endereco {
 	
+private EnderecoPK id;
+
 	@NotNull(message="logradouro não pode ser nulo")
 	private String logradouro;
 	@NotNull(message="bairro não pode ser nulo")
@@ -16,6 +20,14 @@ public class Endereco {
 	private String cep;
 	@NotNull(message="complemento não pode ser nulo")
 	private String complemento;
+	
+	public EnderecoPK getId() {
+		return id;
+	}
+
+	public void setId(EnderecoPK id) {
+		this.id = id;
+	}
 	
 	public String getLogradouro() {
 		return logradouro;

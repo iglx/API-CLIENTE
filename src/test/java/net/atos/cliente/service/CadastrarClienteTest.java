@@ -34,7 +34,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import net.atos.cliente.domain.Cliente;
 import net.atos.cliente.domain.Contato;
 import net.atos.cliente.domain.Endereco;
-import net.atos.cliente.domain.Status;
+import net.atos.cliente.domain.StatusEnum;
 import net.atos.cliente.repository.ClienteRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -115,14 +115,14 @@ class CadastrarClienteTest {
 		Cliente cliente = new Cliente();
 		cliente.setDataCadastro(LocalDate.now());
 		cliente.setDataAlteracao(LocalDateTime.now());
-		cliente.setStatus(Status.INATIVO);
+		cliente.setStatus(StatusEnum.INATIVO);
 		cliente.setNome("Nome do cliente");
 		cliente.setCpf("000.000.000-99");
 		cliente.setEmail("teste@email.com.br");
 		cliente.setNascimento("01/01/1901");
 
 		Endereco endereco = new Endereco();
-		cliente.addEndereco(endereco);
+		cliente.setEndereco(endereco);
 		
 		var assertThrows = assertThrows(ConstraintViolationException.class, () ->
 		cadastrarCliente.persistir(cliente));
@@ -152,7 +152,7 @@ class CadastrarClienteTest {
 		Cliente cliente = new Cliente();
 		cliente.setDataCadastro(LocalDate.now());
 		cliente.setDataAlteracao(LocalDateTime.now());
-		cliente.setStatus(Status.INATIVO);
+		cliente.setStatus(StatusEnum.INATIVO);
 		cliente.setNome("Nome do cliente");
 		cliente.setCpf("000.000.000-99");
 		cliente.setEmail("teste@email.com.br");
@@ -165,7 +165,7 @@ class CadastrarClienteTest {
 		endereco.setEstado("Brasil");
 		endereco.setCep("01234-567");
 		endereco.setComplemento("Clube dos Javeiros");
-		cliente.addEndereco(endereco);
+		cliente.setEndereco(endereco);
 		
 		Contato contato = new Contato(); 
 		cliente.addContato(contato);
@@ -194,7 +194,7 @@ class CadastrarClienteTest {
 		Cliente cliente = new Cliente();
 		cliente.setDataCadastro(LocalDate.now().minusDays(1l));
 		cliente.setDataAlteracao(LocalDateTime.now());
-		cliente.setStatus(Status.INATIVO);
+		cliente.setStatus(StatusEnum.INATIVO);
 		cliente.setNome("Nome do cliente");
 		cliente.setCpf("000.000.000-99");
 		cliente.setEmail("teste@email.com.br");
@@ -207,7 +207,7 @@ class CadastrarClienteTest {
 		endereco.setEstado("Brasil");
 		endereco.setCep("01234-567");
 		endereco.setComplemento("Clube dos Javeiros");
-		cliente.addEndereco(endereco);
+		cliente.setEndereco(endereco);
 		
 		Contato contato = new Contato(); 
 		contato.setTelefone("(99) 9999-9999");
@@ -229,7 +229,7 @@ class CadastrarClienteTest {
 		Cliente cliente = new Cliente();
 		cliente.setDataCadastro(LocalDate.now());
 		cliente.setDataAlteracao(LocalDateTime.now());
-		cliente.setStatus(Status.INATIVO);
+		cliente.setStatus(StatusEnum.INATIVO);
 		cliente.setNome("Nome do cliente");
 		cliente.setCpf("000.000.000-99");
 		cliente.setEmail("teste@email.com.br");

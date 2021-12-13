@@ -21,7 +21,7 @@ public class Cliente {
 	private LocalDateTime dataAlteracao;
 	
 	@NotNull(message="status do cliente não pode ser nulo")
-	private Status status;
+	private StatusEnum status;
 	
 	@NotNull(message="nome não pode ser nulo")
 	private String nome;
@@ -34,7 +34,7 @@ public class Cliente {
 	
 	@NotNull(message = "Pelo menos um endereço deve ser cadastrado")
 	@Valid
-	private List<Endereco> enderecos;
+	private Endereco endereco;
 	
 	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
 	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
@@ -57,11 +57,11 @@ public class Cliente {
 		this.dataAlteracao = dataAlteracao;
 	}
 
-	public Status getStatus() {
+	public StatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(StatusEnum status) {
 		this.status = status;
 	}
 
@@ -105,12 +105,12 @@ public class Cliente {
 		this.id = id;
 	}
 	
-	public List<Endereco> getEnderecos() {
-		return enderecos;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public List<Contato> getContatos() {
@@ -121,14 +121,6 @@ public class Cliente {
 		this.contatos = contatos;
 	}
 	
-	public void addEndereco(Endereco endereco) {
-		List<Endereco> enderecosLocal =
-				Optional.ofNullable(this.getEnderecos()).orElseGet(() -> new ArrayList());
-		enderecosLocal.add(endereco);
-		
-		this.enderecos = enderecosLocal;
-	}
-
 	public void addContato(Contato contato) {
 		List<Contato> contatosLocal =
 				Optional.ofNullable(this.getContatos()).orElseGet(() -> new ArrayList());

@@ -1,5 +1,8 @@
 package net.atos.cliente.repository.entity;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -8,7 +11,12 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TB_CLIENTE_ENDERECO")
-public class EnderecoEntity {
+public class EnderecoEntity implements Serializable {
+	
+	/**
+	 * Serial UID
+	 */
+	private static final long serialVersionUID = -6840352960820327547L;
 	
 	@EmbeddedId
 	private EnderecoPK id;
@@ -92,4 +100,22 @@ public class EnderecoEntity {
 	public void setId(EnderecoPK id) {
 		this.id = id;
 	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnderecoEntity other = (EnderecoEntity) obj;
+		return Objects.equals(id, other.id);
+	}
+	
 }
