@@ -5,33 +5,32 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.atos.cliente.domain.Cliente;
-import net.atos.cliente.domain.Contato;
-import net.atos.cliente.domain.Endereco;
-import net.atos.cliente.repository.entity.ClienteEntity;
+import net.atos.cliente.domain.PessoaVO;
+import net.atos.cliente.domain.ContatoVO;
+import net.atos.cliente.domain.EnderecoVO;
+import net.atos.cliente.repository.entity.PessoaEntity;
 import net.atos.cliente.repository.entity.ContatoEntity;
 import net.atos.cliente.repository.entity.ContatoPK;
 import net.atos.cliente.repository.entity.EnderecoEntity;
-import net.atos.cliente.repository.entity.EnderecoPK;
 
 public class ClienteFactory {
 	
-	private Cliente vo;
-	private ClienteEntity entity;
+	private PessoaVO vo;
+	private PessoaEntity entity;
 	
-	public ClienteFactory(Cliente pVo) {
+	public ClienteFactory(PessoaVO pVo) {
 		this.entity = this.transformaClienteEntity(pVo);
 		this.vo = pVo;
 	}
 	
-	public ClienteFactory(ClienteEntity pEntity) {
+	public ClienteFactory(PessoaEntity pEntity) {
 		this.entity = pEntity;
 		this.vo = this.transformaClienteVO(pEntity);
 	}
 	
-	private Cliente transformaClienteVO(ClienteEntity clienteEntity) {
+	private PessoaVO transformaClienteVO(PessoaEntity clienteEntity) {
 		
-		Cliente clienteVO = new Cliente();
+		PessoaVO clienteVO = new PessoaVO();
 		clienteVO.setDataCadastro(clienteEntity.getDataCadastro());
 		clienteVO.setDataAlteracao(clienteEntity.getDataAlteracao());
 		clienteVO.setStatus(clienteEntity.getStatus());
@@ -52,9 +51,9 @@ public class ClienteFactory {
 		
 	}
 
-	private void construirContatoVO(Cliente cliente, AtomicInteger numeroContato, ContatoEntity contatoEntity) {
+	private void construirContatoVO(PessoaVO cliente, AtomicInteger numeroContato, ContatoEntity contatoEntity) {
 		
-		Contato contatoVO = new Contato();
+		ContatoVO contatoVO = new ContatoVO();
 		contatoVO.setTipoContato(contatoEntity.getTipoContato());
 		contatoVO.setNumero(contatoEntity.getNumero());
 
@@ -62,10 +61,9 @@ public class ClienteFactory {
 	
 	}
 
-	private void transformaEnderecoVO(Cliente cliente,EnderecoEntity enderecoEntity) {
+	private void transformaEnderecoVO(PessoaVO cliente,EnderecoEntity enderecoEntity) {
 		
-		Endereco enderecoVO = new Endereco();
-		enderecoVO.setId(enderecoEntity.getId());
+		EnderecoVO enderecoVO = new EnderecoVO();
 		enderecoVO.setLogradouro(enderecoEntity.getLogradouro());
 		enderecoVO.setBairro(enderecoEntity.getBairro());
 		enderecoVO.setCidade(enderecoEntity.getCidade());
@@ -76,9 +74,9 @@ public class ClienteFactory {
 		
 	}
 
-	private ClienteEntity transformaClienteEntity(Cliente cliente) {
+	private PessoaEntity transformaClienteEntity(PessoaVO cliente) {
 		
-		ClienteEntity clienteEntity = new ClienteEntity();
+		PessoaEntity clienteEntity = new PessoaEntity();
 		clienteEntity.setDataCadastro(cliente.getDataCadastro());
 		clienteEntity.setDataAlteracao(cliente.getDataAlteracao());
 		clienteEntity.setStatus(cliente.getStatus());
@@ -97,11 +95,8 @@ public class ClienteFactory {
 		return clienteEntity;
 	}
 	
-	private void construirEndereco(ClienteEntity clienteEntity, AtomicInteger numeroEndereco, Endereco endereco) {
+	private void construirEndereco(PessoaEntity clienteEntity, AtomicInteger numeroEndereco, EnderecoVO endereco) {
 		EnderecoEntity enderecoEntity = new EnderecoEntity();
-		enderecoEntity.setId(new EnderecoPK());
-		enderecoEntity.getId().setNumeroEndereco(numeroEndereco.incrementAndGet());
-		enderecoEntity.getId().setCliente(clienteEntity);
 		enderecoEntity.setLogradouro(endereco.getLogradouro());
 		enderecoEntity.setBairro(endereco.getBairro());
 		enderecoEntity.setCidade(endereco.getCidade());
@@ -112,7 +107,7 @@ public class ClienteFactory {
 		clienteEntity.setEnderecos(enderecoEntity);
 	}
 	
-	private void construirContato(ClienteEntity clienteEntity, AtomicInteger numeroContato, Contato contato) {
+	private void construirContato(PessoaEntity clienteEntity, AtomicInteger numeroContato, ContatoVO contato) {
 		ContatoEntity contatoEntity = new ContatoEntity();
 		contatoEntity.setId(new ContatoPK());
 		contatoEntity.getId().setNumeroContato(numeroContato.incrementAndGet());
@@ -123,11 +118,11 @@ public class ClienteFactory {
 		clienteEntity.addContato(contatoEntity);
 	}
 
-	public ClienteEntity toEntity() {
+	public PessoaEntity toEntity() {
 		return this.entity;
 	}
 
-	public Cliente toVO() {
+	public PessoaVO toVO() {
 		return vo;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -18,8 +19,9 @@ public class EnderecoEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = -6840352960820327547L;
 	
-	@EmbeddedId
-	private EnderecoPK id;
+	@Id
+	@Column(name = "ID_CADASTRO")
+	private Long id;
 	
 	@Column(name = "LOGRADOURO")
 	@NotNull(message="logradouro não pode ser nulo")
@@ -93,14 +95,14 @@ public class EnderecoEntity implements Serializable {
 		this.complemento = complemento;
 	}
 
-	public EnderecoPK getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(EnderecoPK id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

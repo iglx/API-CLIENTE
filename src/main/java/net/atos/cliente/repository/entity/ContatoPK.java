@@ -20,7 +20,7 @@ public class ContatoPK {
 	private Integer numeroContato;
 	
 	@ManyToOne
-	private ClienteEntity cliente;
+	private PessoaEntity cliente;
 
 	public Integer getNumeroContato() {
 		return numeroContato;
@@ -30,11 +30,11 @@ public class ContatoPK {
 		this.numeroContato = numeroContato;
 	}
 
-	public ClienteEntity getCliente() {
+	public PessoaEntity getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(ClienteEntity cliente) {
+	public void setCliente(PessoaEntity cliente) {
 		this.cliente = cliente;
 	}
 	

@@ -1,4 +1,4 @@
-package net.atos.api.cliente.config;
+package net.atos.cliente.config;
 
 
 import org.springdoc.core.GroupedOpenApi;

@@ -2,7 +2,7 @@ package net.atos.cliente.domain;
 
 import javax.validation.constraints.NotNull;
 
-public class Contato {
+public class ContatoVO {
 	
 	
 	@NotNull(message="tipo de contato do cliente não pode ser nulo")

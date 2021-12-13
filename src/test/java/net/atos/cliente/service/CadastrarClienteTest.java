@@ -31,10 +31,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import net.atos.cliente.domain.Cliente;
-import net.atos.cliente.domain.Contato;
-import net.atos.cliente.domain.Endereco;
+import net.atos.cliente.domain.PessoaVO;
+import net.atos.cliente.domain.ContatoVO;
+import net.atos.cliente.domain.EnderecoVO;
 import net.atos.cliente.domain.StatusEnum;
+import net.atos.cliente.domain.TipoContatoEnum;
+import net.atos.cliente.domain.TipoPessoaEnum;
 import net.atos.cliente.repository.ClienteRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,7 +46,7 @@ class CadastrarClienteTest {
 	private CadastrarCliente cadastrarCliente;
 	
 	private Validator validator;
-	private ClienteRepository clienteRepository;
+	private ClienteRepository pessoaMockitoRepository;
 	
 	@BeforeAll
 	public void iniciarTesteGeral() {
@@ -57,9 +59,11 @@ class CadastrarClienteTest {
 	@BeforeEach
 	public void iniciarTeste() {
 		
-		this.clienteRepository = Mockito.mock(ClienteRepository.class);
+		this.pessoaMockitoRepository = Mockito.mock(ClienteRepository.class);
 		
-		cadastrarCliente = new CadastrarCliente(validator, clienteRepository);
+	//	this.cadastrarCliente = Mockito.mock(CadastrarCliente.class);
+		
+		cadastrarCliente = new CadastrarCliente(validator, pessoaMockitoRepository);
 	}
 	
 	@Test
@@ -68,10 +72,10 @@ class CadastrarClienteTest {
 		
 		assertNotNull(cadastrarCliente);
 		
-		Cliente cliente = null;
+		PessoaVO pessoaVO = null;
 		
 		var assertThrows = assertThrows(IllegalArgumentException.class, () ->
-			cadastrarCliente.persistir(cliente));
+			cadastrarCliente.persistir(pessoaVO));
 
 		assertNotNull(assertThrows);
 	}
@@ -82,12 +86,12 @@ class CadastrarClienteTest {
 		
 		assertNotNull(cadastrarCliente);
 		
-		Cliente cliente = new Cliente();
+		PessoaVO pessoaVO = new PessoaVO();
 		
 		var assertThrows = assertThrows(ConstraintViolationException.class, () ->
-			cadastrarCliente.persistir(cliente));
+			cadastrarCliente.persistir(pessoaVO));
 		
-		assertEquals(9, assertThrows.getConstraintViolations().size());
+		assertEquals(10, assertThrows.getConstraintViolations().size());
 		List<String> mensagens = assertThrows.getConstraintViolations()
 			.stream()
 			.map(ConstraintViolation::getMessage)
@@ -112,22 +116,22 @@ class CadastrarClienteTest {
 		
 		assertNotNull(cadastrarCliente);
 		
-		Cliente cliente = new Cliente();
-		cliente.setDataCadastro(LocalDate.now());
-		cliente.setDataAlteracao(LocalDateTime.now());
-		cliente.setStatus(StatusEnum.INATIVO);
-		cliente.setNome("Nome do cliente");
-		cliente.setCpf("000.000.000-99");
-		cliente.setEmail("teste@email.com.br");
-		cliente.setNascimento("01/01/1901");
+		PessoaVO pessoaVO = new PessoaVO();
+		pessoaVO.setDataCadastro(LocalDate.now());
+		pessoaVO.setDataAlteracao(LocalDateTime.now());
+		pessoaVO.setStatus(StatusEnum.INATIVO);
+		pessoaVO.setNome("Nome do cliente");
+		pessoaVO.setCpf("000.000.000-99");
+		pessoaVO.setEmail("teste@email.com.br");
+		pessoaVO.setNascimento("01/01/1901");
 
-		Endereco endereco = new Endereco();
-		cliente.setEndereco(endereco);
+		EnderecoVO endereco = new EnderecoVO();
+		pessoaVO.setEndereco(endereco);
 		
 		var assertThrows = assertThrows(ConstraintViolationException.class, () ->
-		cadastrarCliente.persistir(cliente));
+		cadastrarCliente.persistir(pessoaVO));
 		
-		assertEquals(7, assertThrows.getConstraintViolations().size());
+		assertEquals(8, assertThrows.getConstraintViolations().size());
 		List<String> mensagens = assertThrows.getConstraintViolations()
 			.stream()
 			.map(ConstraintViolation::getMessage)
@@ -149,39 +153,39 @@ class CadastrarClienteTest {
 		
 		assertNotNull(cadastrarCliente);
 		
-		Cliente cliente = new Cliente();
-		cliente.setDataCadastro(LocalDate.now());
-		cliente.setDataAlteracao(LocalDateTime.now());
-		cliente.setStatus(StatusEnum.INATIVO);
-		cliente.setNome("Nome do cliente");
-		cliente.setCpf("000.000.000-99");
-		cliente.setEmail("teste@email.com.br");
-		cliente.setNascimento("01/01/1901");
+		PessoaVO pessoaVO = new PessoaVO();
+		pessoaVO.setDataCadastro(LocalDate.now());
+		pessoaVO.setDataAlteracao(LocalDateTime.now());
+		pessoaVO.setStatus(StatusEnum.INATIVO);
+		pessoaVO.setNome("Nome do cliente");
+		pessoaVO.setCpf("000.000.000-99");
+		pessoaVO.setEmail("teste@email.com.br");
+		pessoaVO.setNascimento("01/01/1901");
 
-		Endereco endereco = new Endereco();
+		EnderecoVO endereco = new EnderecoVO();
 		endereco.setLogradouro("Rua do Brasil, 1500");
 		endereco.setBairro("Vila Brasil");
 		endereco.setCidade("Java");
 		endereco.setEstado("Brasil");
 		endereco.setCep("01234-567");
 		endereco.setComplemento("Clube dos Javeiros");
-		cliente.setEndereco(endereco);
+		pessoaVO.setEndereco(endereco);
 		
-		Contato contato = new Contato(); 
-		cliente.addContato(contato);
+		ContatoVO contato = new ContatoVO(); 
+		pessoaVO.addContato(contato);
 		
 		var assertThrows = assertThrows(ConstraintViolationException.class, () ->
-		cadastrarCliente.persistir(cliente));
+		cadastrarCliente.persistir(pessoaVO));
 		
-		assertEquals(2, assertThrows.getConstraintViolations().size());
+		assertEquals(3, assertThrows.getConstraintViolations().size());
 		List<String> mensagens = assertThrows.getConstraintViolations()
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.collect(Collectors.toList());
 		
 		assertThat(mensagens, hasItems(
-				"O número de telefone deve ser cadastrado",
-				"O celular deve ser cadastrado"
+				"tipo de contato do cliente não pode ser nulo",
+				"número não pode ser nulo"
 				));
 	}
 	
@@ -191,30 +195,31 @@ class CadastrarClienteTest {
 		
 		assertNotNull(cadastrarCliente);
 		
-		Cliente cliente = new Cliente();
-		cliente.setDataCadastro(LocalDate.now().minusDays(1l));
-		cliente.setDataAlteracao(LocalDateTime.now());
-		cliente.setStatus(StatusEnum.INATIVO);
-		cliente.setNome("Nome do cliente");
-		cliente.setCpf("000.000.000-99");
-		cliente.setEmail("teste@email.com.br");
-		cliente.setNascimento("01/01/1901");
+		PessoaVO pessoaVO = new PessoaVO();
+		pessoaVO.setDataCadastro(LocalDate.now().minusDays(1l));
+		pessoaVO.setDataAlteracao(LocalDateTime.now());
+		pessoaVO.setStatus(StatusEnum.INATIVO);
+		pessoaVO.setTipoPessoaEnum(TipoPessoaEnum.FISICA);
+		pessoaVO.setNome("Nome do cliente");
+		pessoaVO.setCpf("000.000.000-99");
+		pessoaVO.setEmail("teste@email.com.br");
+		pessoaVO.setNascimento("01/01/1901");
 
-		Endereco endereco = new Endereco();
+		EnderecoVO endereco = new EnderecoVO();
 		endereco.setLogradouro("Rua do Brasil, 1500");
 		endereco.setBairro("Vila Brasil");
 		endereco.setCidade("Java");
 		endereco.setEstado("Brasil");
 		endereco.setCep("01234-567");
 		endereco.setComplemento("Clube dos Javeiros");
-		cliente.setEndereco(endereco);
+		pessoaVO.setEndereco(endereco);
 		
-		Contato contato = new Contato(); 
-		contato.setTelefone("(99) 9999-9999");
-		contato.setCelular("(99) 9 9999-9999");
-		cliente.addContato(contato);
+		ContatoVO contato = new ContatoVO(); 
+		contato.setTipoContato(TipoContatoEnum.CELULAR);
+		contato.setNumero("(99) 9 9999-9999");
+		pessoaVO.addContato(contato);	
 
-		var assertThrows = assertThrows(BadRequestException.class, () -> cadastrarCliente.persistir(cliente));
+		var assertThrows = assertThrows(BadRequestException.class, () -> cadastrarCliente.persistir(pessoaVO));
 		
 		assertEquals("A data do cadastro deve ser atual", assertThrows.getMessage());
 
@@ -226,32 +231,34 @@ class CadastrarClienteTest {
 		
 		assertNotNull(cadastrarCliente);
 		
-		Cliente cliente = new Cliente();
-		cliente.setDataCadastro(LocalDate.now());
-		cliente.setDataAlteracao(LocalDateTime.now());
-		cliente.setStatus(StatusEnum.INATIVO);
-		cliente.setNome("Nome do cliente");
-		cliente.setCpf("000.000.000-99");
-		cliente.setEmail("teste@email.com.br");
-		cliente.setNascimento("01/01/1901");
+		PessoaVO pessoaVO = new PessoaVO();
+		pessoaVO.setDataCadastro(LocalDate.now());
+		pessoaVO.setDataAlteracao(LocalDateTime.now());
+		pessoaVO.setStatus(StatusEnum.INATIVO);
+		pessoaVO.setTipoPessoaEnum(TipoPessoaEnum.FISICA);
+		pessoaVO.setNome("Nome do cliente");
+		pessoaVO.setCpf("000.000.000-99");
+		pessoaVO.setEmail("teste@email.com.br");
+		pessoaVO.setNascimento("01/01/1901");
 
-		Endereco endereco = new Endereco();
+		EnderecoVO endereco = new EnderecoVO();
 		endereco.setLogradouro("Rua do Brasil, 1500");
 		endereco.setBairro("Vila Brasil");
 		endereco.setCidade("Java");
 		endereco.setEstado("Brasil");
 		endereco.setCep("01234-567");
 		endereco.setComplemento("Clube dos Javeiros");
-		cliente.addEndereco(endereco);
+		pessoaVO.setEndereco(endereco);
 		
-		Contato contato = new Contato(); 
-		contato.setTelefone("(99) 9999-9999");
-		contato.setCelular("(99) 9 9999-9999");
-		cliente.addContato(contato);
 		
-		cadastrarCliente.persistir(cliente);
+		ContatoVO contato = new ContatoVO(); 
+		contato.setTipoContato(TipoContatoEnum.CELULAR);
+		contato.setNumero("(99) 9 9999-9999");
+		pessoaVO.addContato(contato);
 		
-		then(clienteRepository).should(times(1)).save(any());
+		cadastrarCliente.persistir(pessoaVO);
+		
+		then(pessoaMockitoRepository).should(times(1)).save(any());
 	}
 
 }

@@ -11,10 +11,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import net.atos.cliente.domain.Cliente;
+import net.atos.cliente.domain.PessoaVO;
 import net.atos.cliente.factory.ClienteFactory;
 import net.atos.cliente.repository.ClienteRepository;
-import net.atos.cliente.repository.entity.ClienteEntity;
+import net.atos.cliente.repository.entity.PessoaEntity;
 
 @Service
 public class BuscaClienteService {	
@@ -29,9 +29,9 @@ public class BuscaClienteService {
 	}
 
 
-	public Page<Cliente>  porPeriodoData(LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
+	public Page<PessoaVO>  porPeriodoData(LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
 		
-		Page<ClienteEntity> clienteEntities = 
+		Page<PessoaEntity> clienteEntities = 
 				clienteRepository.findByDataEmissaoBetween(dataInicio,dataFim, pageable);
 		
 		if(clienteEntities.isEmpty()) {
@@ -47,14 +47,14 @@ public class BuscaClienteService {
 				clienteEntities.getTotalElements());		     	
 	}
 
-	public ClienteEntity entityPorId(long id) {
+	public PessoaEntity entityPorId(long id) {
 		return this.clienteRepository.findById(id)
 				.orElseThrow(()-> new NotFoundException("Não encontrada o cliente com id = "+id));		
 	}
 	
 
-	public Cliente porId(long id) {
-		ClienteEntity clienteEntity = this.clienteRepository.findById(id)
+	public PessoaVO porId(long id) {
+		PessoaEntity clienteEntity = this.clienteRepository.findById(id)
 				.orElseThrow(()-> new NotFoundException("Não encontrada o cliente com id = "+id));
 		
 		return new ClienteFactory(clienteEntity).toVO();

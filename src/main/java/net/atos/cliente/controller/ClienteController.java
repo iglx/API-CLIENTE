@@ -29,11 +29,11 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import net.atos.api.cliente.config.PageableBinding;
-import net.atos.cliente.domain.Cliente;
-import net.atos.cliente.domain.Contato;
+import net.atos.cliente.domain.PessoaVO;
+import net.atos.cliente.config.PageableBinding;
+import net.atos.cliente.domain.ContatoVO;
 import net.atos.cliente.repository.ClienteRepository;
-import net.atos.cliente.repository.entity.ClienteEntity;
+import net.atos.cliente.repository.entity.PessoaEntity;
 import net.atos.cliente.service.BuscaClienteService;
 import net.atos.cliente.service.CriaCliente;
 import net.atos.cliente.service.InativarClienteService;
@@ -60,15 +60,15 @@ public class ClienteController {
 	
 	@GetMapping(value = "/cliente", produces = { MediaType.APPLICATION_JSON })
 	@Operation(description = "Listar cliente")
-    public Iterable<ClienteEntity> Get() {
+    public Iterable<PessoaEntity> Get() {
         return clienteRepository.findAll();
     }
 	
 	@PostMapping(produces = { MediaType.APPLICATION_JSON }, consumes = { MediaType.APPLICATION_JSON })
 	@Operation(description = "Cria um cliente")
-	public ResponseEntity<Cliente> criaNotaFiscal(@Valid @RequestBody Cliente cliente) {
+	public ResponseEntity<PessoaVO> criaNotaFiscal(@Valid @RequestBody PessoaVO cliente) {
 
-		Cliente clienteCreated = criacaoCliente.persistir(cliente);
+		PessoaVO clienteCreated = criacaoCliente.persistir(cliente);
 		
 		URI uri = MvcUriComponentsBuilder.fromController(getClass()).path("/{id}")
 				.buildAndExpand(clienteCreated.getId()).toUri();
@@ -78,9 +78,9 @@ public class ClienteController {
 
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON })
 	@Operation(description = "Consulta um cliente por id")
-	public ResponseEntity<Cliente> getClientePorId(@PathVariable("id") Long id) {
+	public ResponseEntity<PessoaVO> getClientePorId(@PathVariable("id") Long id) {
 
-		Cliente clienteEncontrado = buscaClienteService.porId(id);
+		PessoaVO clienteEncontrado = buscaClienteService.porId(id);
 
 		return ResponseEntity.ok(clienteEncontrado);
 	}
@@ -97,13 +97,13 @@ public class ClienteController {
 	@PageableBinding
 	@GetMapping(value = "/emissao-periodos/{dataInicio}/{dataFim}", produces = { MediaType.APPLICATION_JSON })
 	@Operation(description = "Consulta cliente por período")
-	public ResponseEntity<Page<Cliente>> getNotaFiscaisPorPeriodo(
+	public ResponseEntity<Page<PessoaVO>> getNotaFiscaisPorPeriodo(
 			@PathVariable("dataInicio") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dataInicio,
 			@PathVariable("dataFim") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dataFim,
 			@ParameterObject @PageableDefault(sort = {
 					"dataEmissao" }, direction = Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-		Page<Cliente> notasFiscaisEncontradas = this.buscaClienteService.porPeriodoData(dataInicio,
+		Page<PessoaVO> notasFiscaisEncontradas = this.buscaClienteService.porPeriodoData(dataInicio,
 				dataFim, pageable);
 
 		return ResponseEntity.ok(notasFiscaisEncontradas);
@@ -115,9 +115,9 @@ public class ClienteController {
 	    public ResponseEntity<Object> Delete(@PathVariable(value = "id") long id)
 	    {
 		  
-			Cliente clienteEncontrado = buscaClienteService.porId(id);
+			PessoaVO clienteEncontrado = buscaClienteService.porId(id);
 			
-	        Cliente cliente = buscaClienteService.porId(id);
+	        PessoaVO cliente = buscaClienteService.porId(id);
 	        if(cliente.getId().equals(id)){
 	            clienteRepository.deleteById(cliente.getId());
 	            return new ResponseEntity<>(HttpStatus.OK);

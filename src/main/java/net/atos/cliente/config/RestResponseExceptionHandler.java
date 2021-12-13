@@ -1,4 +1,4 @@
-package net.atos.api.cliente.config;
+package net.atos.cliente.config;
 
 import java.util.ArrayList;
 import java.util.List;

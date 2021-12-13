@@ -1,16 +1,16 @@
 package net.atos.cliente.service;
 
-import net.atos.cliente.domain.Cliente;
+import net.atos.cliente.domain.PessoaVO;
 
 public class ClienteInativoEvent {
 
-	private Cliente cliente;
+	private PessoaVO cliente;
 	
-	public ClienteInativoEvent(Cliente pcliente) {
+	public ClienteInativoEvent(PessoaVO pcliente) {
 		this.cliente = pcliente;		
 	}
 
-	public Cliente getCliente() {
+	public PessoaVO getCliente() {
 		return cliente;
 	}
 	

@@ -12,10 +12,10 @@ import javax.ws.rs.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import net.atos.cliente.domain.Cliente;
+import net.atos.cliente.domain.PessoaVO;
 import net.atos.cliente.factory.ClienteFactory;
 import net.atos.cliente.repository.ClienteRepository;
-import net.atos.cliente.repository.entity.ClienteEntity;
+import net.atos.cliente.repository.entity.PessoaEntity;
 
 @Service
 public class CadastrarCliente {
@@ -29,9 +29,9 @@ public class CadastrarCliente {
 		this.clienteRepository = repository;
 	}
 
-	public Cliente persistir(@NotNull(message = "Cadastro não pode ser null") Cliente cliente) {
+	public PessoaVO persistir(@NotNull(message = "Cadastro não pode ser null") PessoaVO cliente) {
 		
-		Set<ConstraintViolation<Cliente>>
+		Set<ConstraintViolation<PessoaVO>>
 			validate = this.validator.validate(cliente);
 		
 		if(!validate.isEmpty()) {
@@ -46,7 +46,7 @@ public class CadastrarCliente {
 			throw new BadRequestException("número de contato deve ser cadastrado");
 		}
 		
-		ClienteEntity clienteEntity = new ClienteFactory(cliente).toEntity();
+		PessoaEntity clienteEntity = new ClienteFactory(cliente).toEntity();
 
 		clienteRepository.save(clienteEntity);
 		

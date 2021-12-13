@@ -1,4 +1,4 @@
-package net.atos.api.cliente.config;
+package net.atos.cliente.config;
 
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

@@ -9,11 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import net.atos.cliente.repository.entity.ClienteEntity;
+import net.atos.cliente.repository.entity.PessoaEntity;
 
 @Repository
-public interface ClienteRepository extends PagingAndSortingRepository<ClienteEntity, Long>{
+public interface ClienteRepository extends PagingAndSortingRepository<PessoaEntity, Long>{
 	
-	public Page<ClienteEntity> findByDataEmissaoBetween(LocalDate dataInicio, LocalDate dataFim, Pageable pageable);
+	public Page<PessoaEntity> findByDataEmissaoBetween(LocalDate dataInicio, LocalDate dataFim, Pageable pageable);
 	
 }
