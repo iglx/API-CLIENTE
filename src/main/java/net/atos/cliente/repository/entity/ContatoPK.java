@@ -1,14 +1,16 @@
 package net.atos.cliente.repository.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Embeddable
-public class ContatoPK {
+public class ContatoPK implements Serializable{
 	
 	/**
 	 * SERIAL UID
@@ -20,6 +22,7 @@ public class ContatoPK {
 	private Integer numeroContato;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_CADASTRO")
 	private PessoaEntity cliente;
 
 	public Integer getNumeroContato() {

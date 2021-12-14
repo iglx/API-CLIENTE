@@ -1,5 +1,6 @@
 package net.atos.cliente.repository.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,13 +8,20 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -24,10 +32,22 @@ import net.atos.cliente.domain.TipoPessoaEnum;
 
 @Entity
 @Table(name = "TB_CLIENTE")
-public class PessoaEntity {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="TIPO_PESSOA", 
+	discriminatorType = DiscriminatorType.STRING)
+public class PessoaEntity implements Serializable {
+	
+	/**
+	 * Serial UID
+	 */
+	private static final long serialVersionUID = -6840352960820327547L;
 	
 	@Id
 	@Column(name = "ID_CADASTRO")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_cli")	
+	@SequenceGenerator(name = "sq_cli",sequenceName = "sequence_cli",
+    		allocationSize = 1,
+    		initialValue = 1)
 	private Long id;
 	
 	@Column(name = "DT_CADASTRO")
@@ -43,7 +63,7 @@ public class PessoaEntity {
 	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
 	
-	@Column(name = "TIPOPESSOA")
+	@Column(name = "TIPO_PESSOA")
 	@NotNull(message="Tipo Pessoa do cliente não pode ser nulo")
 	@Enumerated(EnumType.STRING)
 	private TipoPessoaEnum tipoPessoaEnum;

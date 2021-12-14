@@ -14,6 +14,6 @@ import net.atos.cliente.repository.entity.PessoaEntity;
 @Repository
 public interface ClienteRepository extends PagingAndSortingRepository<PessoaEntity, Long>{
 	
-	public Page<PessoaEntity> findByDataEmissaoBetween(LocalDate dataInicio, LocalDate dataFim, Pageable pageable);
+	public Page<PessoaEntity> findByDataCadastroBetween(LocalDate dataInicio, LocalDate dataFim, Pageable pageable);
 	
 }

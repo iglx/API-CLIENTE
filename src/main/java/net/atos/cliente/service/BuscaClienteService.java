@@ -29,10 +29,10 @@ public class BuscaClienteService {
 	}
 
 
-	public Page<PessoaVO>  porPeriodoData(LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
+	public Page<PessoaVO>  porPeriodoDataCadastro(LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
 		
 		Page<PessoaEntity> clienteEntities = 
-				clienteRepository.findByDataEmissaoBetween(dataInicio,dataFim, pageable);
+				clienteRepository.findByDataCadastroBetween(dataInicio,dataFim, pageable);
 		
 		if(clienteEntities.isEmpty()) {
 			throw new NotFoundException("Nenhuma nota fiscal para o periodo informado");	
@@ -53,7 +53,7 @@ public class BuscaClienteService {
 	}
 	
 
-	public PessoaVO porId(long id) {
+	public PessoaVO pessoaVOporId(long id) {
 		PessoaEntity clienteEntity = this.clienteRepository.findById(id)
 				.orElseThrow(()-> new NotFoundException("Não encontrada o cliente com id = "+id));
 		
