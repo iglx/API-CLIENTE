@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -63,7 +64,7 @@ public class PessoaEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
 	
-	@Column(name = "TIPO_PESSOA")
+	@Column(name = "TIPO_PESSOA", insertable=false, updatable=false)
 	@NotNull(message="Tipo Pessoa do cliente não pode ser nulo")
 	@Enumerated(EnumType.STRING)
 	private TipoPessoaEnum tipoPessoaEnum;
@@ -71,10 +72,6 @@ public class PessoaEntity implements Serializable {
 	@Column(name = "NOME")
 	@NotNull(message="nome não pode ser nulo")
 	private String nome;
-	
-	@Column(name = "CPF")
-	@NotNull(message="cpf não pode ser nulo")
-	private String cpf;
 	
 	@Column(name = "EMAIL")
 	@NotNull(message="e-mail não pode ser nulo")
@@ -87,9 +84,9 @@ public class PessoaEntity implements Serializable {
 	@NotNull(message = "Pelo menos um endereço deve ser cadastrado")
 	@Size(min = 1, message = "Pelo menos um endereço deve ser cadastrado")
 	@Valid
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_CADASTRO",insertable = false, updatable = false)
-	private EnderecoEntity enderecos;
+	private EnderecoEntity endereco;
 	
 	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
 	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
@@ -129,14 +126,6 @@ public class PessoaEntity implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -162,11 +151,12 @@ public class PessoaEntity implements Serializable {
 	}
 	
 	public EnderecoEntity getEnderecos() {
-		return enderecos;
+		return endereco;
 	}
 
 	public void setEnderecos(EnderecoEntity endereco) {
-		this.enderecos = endereco;
+		endereco.setPessoa(this);
+		this.endereco = endereco;
 	}
 	
 	

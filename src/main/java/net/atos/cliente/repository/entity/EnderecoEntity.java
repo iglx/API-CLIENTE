@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -20,13 +22,25 @@ public class EnderecoEntity implements Serializable {
 	private static final long serialVersionUID = -6840352960820327547L;
 	
 	@Id
-	@Column(name = "ID_CADASTRO")
+	@Column(name = "ID_CADASTRO",insertable = false,updatable = false)
 	private Long id;
+	
+	@OneToOne(mappedBy = "endereco")
+	@JoinColumn(name = "ID_CADASTRO")
+	private PessoaEntity pessoa;
 	
 	@Column(name = "LOGRADOURO")
 	@NotNull(message="logradouro não pode ser nulo")
 	private String logradouro;
 	
+	public PessoaEntity getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(PessoaEntity pessoa) {
+		this.pessoa = pessoa;
+	}
+
 	@Column(name = "BAIRRO")
 	@NotNull(message="bairro não pode ser nulo")
 	private String bairro;

@@ -28,9 +28,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.atos.cliente.config.PageableBinding;
 import net.atos.cliente.domain.PessoaVO;
+import net.atos.cliente.domain.TipoPessoaEnum;
 import net.atos.cliente.repository.ClienteRepository;
 import net.atos.cliente.service.BuscaClienteService;
-import net.atos.cliente.service.CriaCliente;
+import net.atos.cliente.service.CriaPessoa;
 import net.atos.cliente.service.InativarClienteService;
 
 @RestController
@@ -38,13 +39,13 @@ import net.atos.cliente.service.InativarClienteService;
 @Tag(name = "Cliente")
 public class ClienteController {
 	
-	private List<CriaCliente> criacaoClienteStrategies;
+	private List<CriaPessoa> criacaoClienteStrategies;
 	
 	private BuscaClienteService buscaClienteService;
 	
 	private InativarClienteService inativarClienteService;
 	
-	public ClienteController(List<CriaCliente> strategies,BuscaClienteService buscaNotaFiscalService, InativarClienteService inativarClienteService,ClienteRepository clienteRepository) {
+	public ClienteController(List<CriaPessoa> strategies,BuscaClienteService buscaNotaFiscalService, InativarClienteService inativarClienteService,ClienteRepository clienteRepository) {
 		super();
 		this.criacaoClienteStrategies = strategies; 
 		this.buscaClienteService = buscaNotaFiscalService;
@@ -56,8 +57,8 @@ public class ClienteController {
 	@Operation(description = "Cria um cliente")
 	public ResponseEntity<PessoaVO> criaNotaFiscal(@Valid @RequestBody PessoaVO pessoaVO) {
 		
-		CriaCliente criaCliente = criacaoClienteStrategies.stream()
-				.filter(contato -> contato.isType(pessoaVO.getTipoPessoaEnum())).findFirst()
+		CriaPessoa criaCliente = criacaoClienteStrategies.stream()
+				.filter(item -> item.isType(pessoaVO.getTipoPessoaEnum())).findFirst()
 				.orElseThrow(() -> new BadRequestException("Tipo Pessoa, não Existe."));
 		
 		PessoaVO pessoaCreated = criaCliente.persistir(pessoaVO);

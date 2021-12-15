@@ -28,9 +28,6 @@ public class PessoaVO {
 	
 	@NotNull(message="nome não pode ser nulo")
 	private String nome;
-
-	@NotNull(message="cpf não pode ser nulo")
-	private String cpf;
 	
 	@NotNull(message="e-mail não pode ser nulo")
 	private String email;
@@ -77,14 +74,6 @@ public class PessoaVO {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public String getEmail() {

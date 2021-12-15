@@ -35,7 +35,6 @@ public class ClienteFactory {
 		clienteVO.setDataAlteracao(clienteEntity.getDataAlteracao());
 		clienteVO.setStatus(clienteEntity.getStatus());
 		clienteVO.setNome(clienteEntity.getNome());
-		clienteVO.setCpf(clienteEntity.getCpf());
 		clienteVO.setEmail(clienteEntity.getEmail());
 		clienteVO.setNascimento(clienteEntity.getNascimento());
 	
@@ -64,6 +63,7 @@ public class ClienteFactory {
 	private void transformaEnderecoVO(PessoaVO cliente,EnderecoEntity enderecoEntity) {
 		
 		EnderecoVO enderecoVO = new EnderecoVO();
+		
 		enderecoVO.setLogradouro(enderecoEntity.getLogradouro());
 		enderecoVO.setBairro(enderecoEntity.getBairro());
 		enderecoVO.setCidade(enderecoEntity.getCidade());
@@ -81,22 +81,22 @@ public class ClienteFactory {
 		clienteEntity.setDataAlteracao(cliente.getDataAlteracao());
 		clienteEntity.setStatus(cliente.getStatus());
 		clienteEntity.setNome(cliente.getNome());
-		clienteEntity.setCpf(cliente.getCpf());
 		clienteEntity.setEmail(cliente.getEmail());
 		clienteEntity.setNascimento(cliente.getNascimento());
 	
 		AtomicInteger numeroContato = new AtomicInteger();
 		
-		this.construirEndereco(clienteEntity, numeroContato, cliente.getEndereco());
+		this.transformaEnderecoEntity(clienteEntity, cliente.getEndereco());
 		
 		cliente.getContatos().stream().forEach(contato ->
-			this.construirContato(clienteEntity, numeroContato, contato));
+			this.transformaContatoEntity(clienteEntity, numeroContato, contato));
 		
 		return clienteEntity;
 	}
 	
-	private void construirEndereco(PessoaEntity clienteEntity, AtomicInteger numeroEndereco, EnderecoVO endereco) {
+	private void transformaEnderecoEntity(PessoaEntity clienteEntity, EnderecoVO endereco) {
 		EnderecoEntity enderecoEntity = new EnderecoEntity();
+//		enderecoEntity.setId(null);
 		enderecoEntity.setLogradouro(endereco.getLogradouro());
 		enderecoEntity.setBairro(endereco.getBairro());
 		enderecoEntity.setCidade(endereco.getCidade());
@@ -107,7 +107,7 @@ public class ClienteFactory {
 		clienteEntity.setEnderecos(enderecoEntity);
 	}
 	
-	private void construirContato(PessoaEntity clienteEntity, AtomicInteger numeroContato, ContatoVO contato) {
+	private void transformaContatoEntity(PessoaEntity clienteEntity, AtomicInteger numeroContato, ContatoVO contato) {
 		ContatoEntity contatoEntity = new ContatoEntity();
 		contatoEntity.setId(new ContatoPK());
 		contatoEntity.getId().setNumeroContato(numeroContato.incrementAndGet());

@@ -6,9 +6,9 @@ import net.atos.cliente.domain.PessoaVO;
 import net.atos.cliente.domain.StatusEnum;
 import net.atos.cliente.domain.TipoPessoaEnum;
 
-public interface CriaCliente{
+public interface CriaPessoa{
 	
-	public PessoaVO persistir(@NotNull(message = "Nota Fiscal não pode ser null") PessoaVO pessoaVO); 
+	public PessoaVO persistir(@NotNull(message = "Cliente Tipo não pode ser null") PessoaVO pessoaVO); 
 
-	public boolean isType(TipoPessoaEnum tipoPessoaEnum);
+	public Boolean isType(TipoPessoaEnum type);
 }

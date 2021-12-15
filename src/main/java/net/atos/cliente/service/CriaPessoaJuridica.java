@@ -13,18 +13,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import net.atos.cliente.domain.PessoaVO;
+import net.atos.cliente.domain.TipoPessoaEnum;
 import net.atos.cliente.factory.ClienteFactory;
 import net.atos.cliente.repository.ClienteRepository;
 import net.atos.cliente.repository.entity.PessoaEntity;
 
 @Service
-public class CadastrarCliente {
+public class CriaPessoaJuridica implements CriaPessoa{
 	
 	private Validator validator;
 	
 	private ClienteRepository clienteRepository;
 	
-	public CadastrarCliente(Validator v, ClienteRepository repository) {
+	public CriaPessoaJuridica(Validator v, ClienteRepository repository) {
 		this.validator = v;
 		this.clienteRepository = repository;
 	}
@@ -54,6 +55,12 @@ public class CadastrarCliente {
 		
 		return cliente;
 		
+	}
+
+	@Override
+	public Boolean isType(TipoPessoaEnum type) {
+		
+		return TipoPessoaEnum.JURIDICA.equals(type);
 	}
 	
 }

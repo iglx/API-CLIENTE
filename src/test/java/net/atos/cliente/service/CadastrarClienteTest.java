@@ -43,7 +43,7 @@ import net.atos.cliente.repository.ClienteRepository;
 @TestInstance(Lifecycle.PER_CLASS)
 class CadastrarClienteTest {
 
-	private CadastrarCliente cadastrarCliente;
+	private CriaPessoaFisica cadastrarCliente;
 	
 	private Validator validator;
 	private ClienteRepository pessoaMockitoRepository;
@@ -63,7 +63,7 @@ class CadastrarClienteTest {
 		
 	//	this.cadastrarCliente = Mockito.mock(CadastrarCliente.class);
 		
-		cadastrarCliente = new CadastrarCliente(validator, pessoaMockitoRepository);
+		cadastrarCliente = new CriaPessoaFisica(validator, pessoaMockitoRepository);
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ class CadastrarClienteTest {
 		var assertThrows = assertThrows(ConstraintViolationException.class, () ->
 			cadastrarCliente.persistir(pessoaVO));
 		
-		assertEquals(10, assertThrows.getConstraintViolations().size());
+		assertEquals(9, assertThrows.getConstraintViolations().size());
 		List<String> mensagens = assertThrows.getConstraintViolations()
 			.stream()
 			.map(ConstraintViolation::getMessage)
@@ -102,7 +102,6 @@ class CadastrarClienteTest {
 				"Campo: DataAlteracao não pode ser nulo",
 				"status do cliente não pode ser nulo",
 				"nome não pode ser nulo",
-				"cpf não pode ser nulo",
 				"e-mail não pode ser nulo",
 				"nascimento não pode ser nulo",
 				"Pelo menos um endereço deve ser cadastrado",
@@ -121,7 +120,6 @@ class CadastrarClienteTest {
 		pessoaVO.setDataAlteracao(LocalDateTime.now());
 		pessoaVO.setStatus(StatusEnum.INATIVO);
 		pessoaVO.setNome("Nome do cliente");
-		pessoaVO.setCpf("000.000.000-99");
 		pessoaVO.setEmail("teste@email.com.br");
 		pessoaVO.setNascimento("01/01/1901");
 
@@ -158,7 +156,6 @@ class CadastrarClienteTest {
 		pessoaVO.setDataAlteracao(LocalDateTime.now());
 		pessoaVO.setStatus(StatusEnum.INATIVO);
 		pessoaVO.setNome("Nome do cliente");
-		pessoaVO.setCpf("000.000.000-99");
 		pessoaVO.setEmail("teste@email.com.br");
 		pessoaVO.setNascimento("01/01/1901");
 
@@ -201,7 +198,6 @@ class CadastrarClienteTest {
 		pessoaVO.setStatus(StatusEnum.INATIVO);
 		pessoaVO.setTipoPessoaEnum(TipoPessoaEnum.FISICA);
 		pessoaVO.setNome("Nome do cliente");
-		pessoaVO.setCpf("000.000.000-99");
 		pessoaVO.setEmail("teste@email.com.br");
 		pessoaVO.setNascimento("01/01/1901");
 
@@ -237,7 +233,6 @@ class CadastrarClienteTest {
 		pessoaVO.setStatus(StatusEnum.INATIVO);
 		pessoaVO.setTipoPessoaEnum(TipoPessoaEnum.FISICA);
 		pessoaVO.setNome("Nome do cliente");
-		pessoaVO.setCpf("000.000.000-99");
 		pessoaVO.setEmail("teste@email.com.br");
 		pessoaVO.setNascimento("01/01/1901");
 
