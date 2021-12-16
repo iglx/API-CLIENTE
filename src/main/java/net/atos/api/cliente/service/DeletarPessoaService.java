@@ -14,14 +14,14 @@ import net.atos.api.cliente.repository.PessoaRepository;
 import net.atos.api.cliente.repository.entity.PessoaEntity;
 
 @Service
-public class InativarPessoaService {
+public class DeletarPessoaService {
 
 	private Validator validator;
 	private BuscaPessoaService buscaPessoaService;
 	private ApplicationEventPublisher eventPublisher;
 	private PessoaRepository pessoaRepository;
 	
-	public InativarPessoaService(Validator validator, BuscaPessoaService buscaPessoaService,
+	public DeletarPessoaService(Validator validator, BuscaPessoaService buscaPessoaService,
 			ApplicationEventPublisher eventPublisher,PessoaRepository pessoaRepository) {
 		super();
 		this.validator = validator;
@@ -29,17 +29,13 @@ public class InativarPessoaService {
 		this.eventPublisher = eventPublisher;
 		this.pessoaRepository = pessoaRepository;
 	}
-
+	
 	@Transactional
-	public void inativar(Long id) {
+	public void deletar(Long id) {
 		
 		PessoaEntity pessoaEncontrada = buscaPessoaService.pessoaEntityporId(id);
 		
-		if (pessoaEncontrada.getStatusPessoaEnum().equals(StatusPessoaEnum.INATIVO)) {
-			throw new BadRequestException("O cliente já está inativo.");	
-		}
-		
-		pessoaEncontrada.setStatusPessoaEnum(StatusPessoaEnum.INATIVO);
+		pessoaRepository.deleteById(pessoaEncontrada.getId());
 		
 		PessoaVO pessoaVO = new PessoaVO();
 		pessoaVO.setId(id);
@@ -47,5 +43,6 @@ public class InativarPessoaService {
 		
 		this.eventPublisher.publishEvent(event);	
 	}
+
 
 }

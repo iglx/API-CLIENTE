@@ -31,6 +31,7 @@ public class PessoaFactory {
 	private PessoaVO transformaEmPessoaVO(PessoaEntity pessoaEntity) {
 		
 		PessoaVO pessoaVO = new PessoaVO();
+		pessoaVO.setId(pessoaEntity.getId());
 		pessoaVO.setDataCadastro(pessoaEntity.getDataCadastro());
 		pessoaVO.setDataAlteracao(pessoaEntity.getDataAlteracao());
 		pessoaVO.setStatusPessoaEnum(pessoaEntity.getStatusPessoaEnum());
@@ -78,6 +79,7 @@ public class PessoaFactory {
 	private PessoaEntity transformaEmPessoaEntity(PessoaVO pessoaVO) {
 		
 		PessoaEntity pessoaEntity = new PessoaEntity();
+		pessoaEntity.setId(pessoaVO.getId());
 		pessoaEntity.setDataCadastro(pessoaVO.getDataCadastro());
 		pessoaEntity.setDataAlteracao(pessoaVO.getDataAlteracao());
 		pessoaEntity.setStatusPessoaEnum(pessoaVO.getStatusPessoaEnum());
