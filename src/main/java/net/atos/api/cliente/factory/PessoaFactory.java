@@ -33,7 +33,8 @@ public class PessoaFactory {
 		PessoaVO pessoaVO = new PessoaVO();
 		pessoaVO.setDataCadastro(pessoaEntity.getDataCadastro());
 		pessoaVO.setDataAlteracao(pessoaEntity.getDataAlteracao());
-		pessoaVO.setStatus(pessoaEntity.getStatus());
+		pessoaVO.setStatusPessoaEnum(pessoaEntity.getStatusPessoaEnum());
+		pessoaVO.setTipoPessoaEnum(pessoaEntity.getTipoPessoaEnum());
 		pessoaVO.setNome(pessoaEntity.getNome());
 		pessoaVO.setEmail(pessoaEntity.getEmail());
 		pessoaVO.setNascimento(pessoaEntity.getNascimento());
@@ -74,29 +75,29 @@ public class PessoaFactory {
 		
 	}
 
-	private PessoaEntity transformaEmPessoaEntity(PessoaVO pessoa) {
+	private PessoaEntity transformaEmPessoaEntity(PessoaVO pessoaVO) {
 		
 		PessoaEntity pessoaEntity = new PessoaEntity();
-		pessoaEntity.setDataCadastro(pessoa.getDataCadastro());
-		pessoaEntity.setDataAlteracao(pessoa.getDataAlteracao());
-		pessoaEntity.setStatus(pessoa.getStatus());
-		pessoaEntity.setNome(pessoa.getNome());
-		pessoaEntity.setEmail(pessoa.getEmail());
-		pessoaEntity.setNascimento(pessoa.getNascimento());
+		pessoaEntity.setDataCadastro(pessoaVO.getDataCadastro());
+		pessoaEntity.setDataAlteracao(pessoaVO.getDataAlteracao());
+		pessoaEntity.setStatusPessoaEnum(pessoaVO.getStatusPessoaEnum());
+		pessoaEntity.setTipoPessoaEnum(pessoaVO.getTipoPessoaEnum());
+		pessoaEntity.setNome(pessoaVO.getNome());
+		pessoaEntity.setEmail(pessoaVO.getEmail());
+		pessoaEntity.setNascimento(pessoaVO.getNascimento());
 	
 		AtomicInteger numeroContato = new AtomicInteger();
 		
-		this.transformaEmEnderecoEntity(pessoaEntity, pessoa.getEndereco());
+		this.transformaEmEnderecoEntity(pessoaEntity, pessoaVO.getEndereco());
 		
-		pessoa.getContatos().stream().forEach(contato ->
+		pessoaVO.getContatos().stream().forEach(contato ->
 			this.transformaEmContatoEntity(pessoaEntity, numeroContato, contato));
 		
 		return pessoaEntity;
 	}
 	
 	private void transformaEmEnderecoEntity(PessoaEntity pessoaEntity, EnderecoVO enderecoVO) {
-		EnderecoEntity enderecoEntity = new EnderecoEntity();
-//		enderecoEntity.setId(null);
+		EnderecoEntity enderecoEntity = new EnderecoEntity();	
 		enderecoEntity.setLogradouro(enderecoVO.getLogradouro());
 		enderecoEntity.setBairro(enderecoVO.getBairro());
 		enderecoEntity.setCidade(enderecoVO.getCidade());

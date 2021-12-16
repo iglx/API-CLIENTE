@@ -25,11 +25,11 @@ public class InativarPessoaService {
 		
 		PessoaEntity pessoaEncontrada = this.buscaPessoaService.entityPorId(id);
 		
-		if (pessoaEncontrada.getStatus().equals(StatusPessoaEnum.INATIVO)) {
+		if (pessoaEncontrada.getStatusPessoaEnum().equals(StatusPessoaEnum.INATIVO)) {
 			throw new BadRequestException("O cliente já está inativo.");	
 		}
 		
-		pessoaEncontrada.setStatus(StatusPessoaEnum.INATIVO);
+		pessoaEncontrada.setStatusPessoaEnum(StatusPessoaEnum.INATIVO);
 		
 		PessoaVO pessoaVO = new PessoaVO();
 		pessoaVO.setId(id);

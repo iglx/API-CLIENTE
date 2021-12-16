@@ -119,7 +119,7 @@ class CadastrarPessoaTest {
 		PessoaVO pessoaVO = new PessoaVO();
 		pessoaVO.setDataCadastro(LocalDate.now());
 		pessoaVO.setDataAlteracao(LocalDateTime.now());
-		pessoaVO.setStatus(StatusPessoaEnum.INATIVO);
+		pessoaVO.setStatusPessoaEnum(StatusPessoaEnum.INATIVO);
 		pessoaVO.setNome("Nome do cliente");
 		pessoaVO.setEmail("teste@email.com.br");
 		pessoaVO.setNascimento("01/01/1901");
@@ -155,7 +155,7 @@ class CadastrarPessoaTest {
 		PessoaVO pessoaVO = new PessoaVO();
 		pessoaVO.setDataCadastro(LocalDate.now());
 		pessoaVO.setDataAlteracao(LocalDateTime.now());
-		pessoaVO.setStatus(StatusPessoaEnum.INATIVO);
+		pessoaVO.setStatusPessoaEnum(StatusPessoaEnum.INATIVO);
 		pessoaVO.setNome("Nome do cliente");
 		pessoaVO.setEmail("teste@email.com.br");
 		pessoaVO.setNascimento("01/01/1901");
@@ -196,7 +196,7 @@ class CadastrarPessoaTest {
 		PessoaVO pessoaVO = new PessoaVO();
 		pessoaVO.setDataCadastro(LocalDate.now().minusDays(1l));
 		pessoaVO.setDataAlteracao(LocalDateTime.now());
-		pessoaVO.setStatus(StatusPessoaEnum.INATIVO);
+		pessoaVO.setStatusPessoaEnum(StatusPessoaEnum.INATIVO);
 		pessoaVO.setTipoPessoaEnum(TipoPessoaEnum.FISICA);
 		pessoaVO.setNome("Nome do cliente");
 		pessoaVO.setEmail("teste@email.com.br");
@@ -231,7 +231,7 @@ class CadastrarPessoaTest {
 		PessoaVO pessoaVO = new PessoaVO();
 		pessoaVO.setDataCadastro(LocalDate.now());
 		pessoaVO.setDataAlteracao(LocalDateTime.now());
-		pessoaVO.setStatus(StatusPessoaEnum.INATIVO);
+		pessoaVO.setStatusPessoaEnum(StatusPessoaEnum.INATIVO);
 		pessoaVO.setTipoPessoaEnum(TipoPessoaEnum.FISICA);
 		pessoaVO.setNome("Nome do cliente");
 		pessoaVO.setEmail("teste@email.com.br");

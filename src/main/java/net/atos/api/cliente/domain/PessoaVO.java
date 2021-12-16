@@ -21,7 +21,7 @@ public class PessoaVO {
 	private LocalDateTime dataAlteracao;
 	
 	@NotNull(message="status do cliente não pode ser nulo")
-	private StatusPessoaEnum status;
+	private StatusPessoaEnum statusPessoaEnum;
 	
 	@NotNull(message = "Campo TipoPessoa não pode ser nulo")
 	private TipoPessoaEnum tipoPessoaEnum;
@@ -34,6 +34,8 @@ public class PessoaVO {
 	
 	@NotNull(message="nascimento não pode ser nulo")
 	private String nascimento;
+	
+	private String nrCpf;	
 	
 	@NotNull(message = "Pelo menos um endereço deve ser cadastrado")
 	@Valid
@@ -60,12 +62,12 @@ public class PessoaVO {
 		this.dataAlteracao = dataAlteracao;
 	}
 
-	public StatusPessoaEnum getStatus() {
-		return status;
+	public StatusPessoaEnum getStatusPessoaEnum() {
+		return statusPessoaEnum;
 	}
 
-	public void setStatus(StatusPessoaEnum status) {
-		this.status = status;
+	public void setStatusPessoaEnum(StatusPessoaEnum statusPessoaEnum) {
+		this.statusPessoaEnum = statusPessoaEnum;
 	}
 
 	public String getNome() {
