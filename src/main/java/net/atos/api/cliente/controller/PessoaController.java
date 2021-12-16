@@ -55,7 +55,7 @@ public class PessoaController {
 
 	@PostMapping(produces = { MediaType.APPLICATION_JSON }, consumes = { MediaType.APPLICATION_JSON })
 	@Operation(description = "Cria um cliente")
-	public ResponseEntity<PessoaVO> criaNotaFiscal(@Valid @RequestBody PessoaVO pessoaVO) {
+	public ResponseEntity<PessoaVO> criaPessoa(@Valid @RequestBody PessoaVO pessoaVO) {
 		
 		CriaPessoa criaPessoa = criacaoPessoaStrategies.stream()
 				.filter(item -> item.isType(pessoaVO.getTipoPessoaEnum())).findFirst()

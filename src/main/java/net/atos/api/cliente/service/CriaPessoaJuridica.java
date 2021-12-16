@@ -15,8 +15,9 @@ import org.springframework.util.ObjectUtils;
 import net.atos.api.cliente.domain.PessoaVO;
 import net.atos.api.cliente.domain.TipoPessoaEnum;
 import net.atos.api.cliente.factory.PessoaFactory;
+import net.atos.api.cliente.factory.PessoaJuridicaFactory;
 import net.atos.api.cliente.repository.PessoaRepository;
-import net.atos.api.cliente.repository.entity.PessoaEntity;
+import net.atos.api.cliente.repository.entity.PessoaJuridicaEntity;
 
 @Service
 public class CriaPessoaJuridica implements CriaPessoa{
@@ -47,11 +48,11 @@ public class CriaPessoaJuridica implements CriaPessoa{
 			throw new BadRequestException("número de contato deve ser cadastrado");
 		}
 		
-		PessoaEntity pessoaEntity = new PessoaFactory(pessoaVO).toEntity();
+		PessoaJuridicaEntity pessoaJuridicaEntity = new PessoaJuridicaFactory(pessoaVO).toEntity();
 
-		pessoaRepository.save(pessoaEntity);
+		pessoaRepository.save(pessoaJuridicaEntity);
 		
-		pessoaVO.setId(pessoaEntity.getId());
+		pessoaVO.setId(pessoaJuridicaEntity.getId());
 		
 		return pessoaVO;
 		

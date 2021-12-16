@@ -11,24 +11,24 @@ import net.atos.api.cliente.domain.PessoaVO;
 import net.atos.api.cliente.repository.entity.ContatoEntity;
 import net.atos.api.cliente.repository.entity.ContatoPK;
 import net.atos.api.cliente.repository.entity.EnderecoEntity;
-import net.atos.api.cliente.repository.entity.PessoaEntity;
+import net.atos.api.cliente.repository.entity.PessoaJuridicaEntity;
 
-public class PessoaFactory {
+public class PessoaJuridicaFactory {
 	
 	private PessoaVO vo;
-	private PessoaEntity entity;
+	private PessoaJuridicaEntity entity;
 	
-	public PessoaFactory(PessoaVO pVo) {
-		this.entity = this.transformaEmPessoaEntity(pVo);
+	public PessoaJuridicaFactory(PessoaVO pVo) {
+		this.entity = this.transformaEmPessoaJuridicaEntity(pVo);
 		this.vo = pVo;
 	}
 	
-	public PessoaFactory(PessoaEntity pEntity) {
+	public PessoaJuridicaFactory(PessoaJuridicaEntity pEntity) {
 		this.entity = pEntity;
 		this.vo = this.transformaEmPessoaVO(pEntity);
 	}
 	
-	private PessoaVO transformaEmPessoaVO(PessoaEntity pessoaEntity) {
+	private PessoaVO transformaEmPessoaVO(PessoaJuridicaEntity pessoaEntity) {
 		
 		PessoaVO pessoaVO = new PessoaVO();
 		pessoaVO.setDataCadastro(pessoaEntity.getDataCadastro());
@@ -38,6 +38,7 @@ public class PessoaFactory {
 		pessoaVO.setNome(pessoaEntity.getNome());
 		pessoaVO.setEmail(pessoaEntity.getEmail());
 		pessoaVO.setNascimento(pessoaEntity.getNascimento());
+		pessoaVO.setNrCnpj(pessoaEntity.getNrCnpj());
 	
 		AtomicInteger numeroContato = new AtomicInteger();
 		
@@ -75,16 +76,16 @@ public class PessoaFactory {
 		
 	}
 
-	private PessoaEntity transformaEmPessoaEntity(PessoaVO pessoaVO) {
+	private PessoaJuridicaEntity transformaEmPessoaJuridicaEntity(PessoaVO pessoaVO) {
 		
-		PessoaEntity pessoaEntity = new PessoaEntity();
+		PessoaJuridicaEntity pessoaEntity = new PessoaJuridicaEntity();
 		pessoaEntity.setDataCadastro(pessoaVO.getDataCadastro());
 		pessoaEntity.setDataAlteracao(pessoaVO.getDataAlteracao());
 		pessoaEntity.setStatusPessoaEnum(pessoaVO.getStatusPessoaEnum());
-		pessoaEntity.setTipoPessoaEnum(pessoaVO.getTipoPessoaEnum());
 		pessoaEntity.setNome(pessoaVO.getNome());
 		pessoaEntity.setEmail(pessoaVO.getEmail());
 		pessoaEntity.setNascimento(pessoaVO.getNascimento());
+		pessoaEntity.setNrCnpj(pessoaVO.getNrCnpj());
 	
 		AtomicInteger numeroContato = new AtomicInteger();
 		
@@ -96,7 +97,7 @@ public class PessoaFactory {
 		return pessoaEntity;
 	}
 	
-	private void transformaEmEnderecoEntity(PessoaEntity pessoaEntity, EnderecoVO enderecoVO) {
+	private void transformaEmEnderecoEntity(PessoaJuridicaEntity pessoaEntity, EnderecoVO enderecoVO) {
 		EnderecoEntity enderecoEntity = new EnderecoEntity();	
 		enderecoEntity.setLogradouro(enderecoVO.getLogradouro());
 		enderecoEntity.setBairro(enderecoVO.getBairro());
@@ -108,7 +109,7 @@ public class PessoaFactory {
 		pessoaEntity.setEndereco(enderecoEntity);
 	}
 	
-	private void transformaEmContatoEntity(PessoaEntity pessoaEntity, AtomicInteger numeroContato, ContatoVO contatoVO) {
+	private void transformaEmContatoEntity(PessoaJuridicaEntity pessoaEntity, AtomicInteger numeroContato, ContatoVO contatoVO) {
 		ContatoEntity contatoEntity = new ContatoEntity();
 		contatoEntity.setId(new ContatoPK());
 		contatoEntity.getId().setNumeroContato(numeroContato.incrementAndGet());
@@ -119,7 +120,7 @@ public class PessoaFactory {
 		pessoaEntity.addContato(contatoEntity);
 	}
 
-	public PessoaEntity toEntity() {
+	public PessoaJuridicaEntity toEntity() {
 		return this.entity;
 	}
 

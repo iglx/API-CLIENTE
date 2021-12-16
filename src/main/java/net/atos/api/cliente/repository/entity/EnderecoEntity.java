@@ -8,6 +8,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -22,10 +23,12 @@ public class EnderecoEntity implements Serializable {
 	private static final long serialVersionUID = -6840352960820327547L;
 	
 	@Id
-	@Column(name = "ID_CADASTRO",insertable = false,updatable = false)
+	@Column(name = "ID_CADASTRO")
 	private Long id;
 	
-	@OneToOne(mappedBy = "endereco")
+
+	@OneToOne
+	@MapsId
 	@JoinColumn(name = "ID_CADASTRO")
 	private PessoaEntity pessoa;
 	

@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,6 +23,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -36,6 +38,7 @@ import net.atos.api.cliente.domain.TipoPessoaEnum;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="TIPO_PESSOA", 
 	discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("PESSOA")
 public class PessoaEntity implements Serializable {
 	
 	/**
@@ -62,7 +65,7 @@ public class PessoaEntity implements Serializable {
 	@Column(name = "STATUS")
 	@NotNull(message="status do cliente não pode ser nulo")
 	@Enumerated(EnumType.STRING)
-	private StatusPessoaEnum status;
+	private StatusPessoaEnum statusPessoaEnum;
 	
 	@Column(name = "TIPO_PESSOA", insertable=false, updatable=false)
 	@NotNull(message="Tipo Pessoa do cliente não pode ser nulo")
@@ -82,16 +85,15 @@ public class PessoaEntity implements Serializable {
 	private String nascimento;
 	
 	@NotNull(message = "Pelo menos um endereço deve ser cadastrado")
-	@Size(min = 1, message = "Pelo menos um endereço deve ser cadastrado")
 	@Valid
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_CADASTRO",insertable = false, updatable = false)
+	@OneToOne(mappedBy = "pessoa",cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private EnderecoEntity endereco;
 	
 	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
 	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
 	@Valid
-	@OneToMany(mappedBy = "id.cliente")
+	@OneToMany(mappedBy = "id.pessoa", cascade = CascadeType.ALL)
 	private List<ContatoEntity> contatos;
 	
 	public LocalDate getDataCadastro() {
@@ -110,12 +112,12 @@ public class PessoaEntity implements Serializable {
 		this.dataAlteracao = dataAlteracao;
 	}
 
-	public StatusPessoaEnum getStatus() {
-		return status;
+	public StatusPessoaEnum getStatusPessoaEnum() {
+		return statusPessoaEnum;
 	}
 
-	public void setStatus(StatusPessoaEnum status) {
-		this.status = status;
+	public void setStatusPessoaEnum(StatusPessoaEnum statusPessoaEnum) {
+		this.statusPessoaEnum = statusPessoaEnum;
 	}
 
 	public String getNome() {
@@ -158,9 +160,7 @@ public class PessoaEntity implements Serializable {
 		endereco.setPessoa(this);
 		this.endereco = endereco;
 	}
-	
-	
-
+		
 	public TipoPessoaEnum getTipoPessoaEnum() {
 		return tipoPessoaEnum;
 	}
