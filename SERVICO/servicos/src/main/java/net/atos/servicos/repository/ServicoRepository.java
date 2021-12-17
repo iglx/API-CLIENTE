@@ -17,6 +17,6 @@ public interface ServicoRepository extends PagingAndSortingRepository<ServicoEnt
 	
 	public Optional<ServicoEntity> findByIdCliente(Long idCliente);
 
-	public Page<ServicoEntity> findByDataEmissaoBetween(@NotNull LocalDate inicio, @NotNull LocalDate fim, Pageable pageable);
+	public Page<ServicoEntity> findByDataEmissaoBetween(@NotNull LocalDate dataInicial, @NotNull LocalDate fim, Pageable pageable);
 	
 }

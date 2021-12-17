@@ -25,9 +25,9 @@ public class ConsultaServicoService {
 		this.servicoRepository = pServicoRepository;
 	}
 
-	public Page<ServicoVO> consultaServico(@NotNull LocalDate inicio, @NotNull LocalDate fim, Pageable pageable) {
+	public Page<ServicoVO> consultaServico(@NotNull LocalDate dataInicial, @NotNull LocalDate dataFim, Pageable pageable) {
 
-		Page<ServicoEntity> servicosEncontrados = servicoRepository.findByDataEmissaoBetween(inicio, fim, pageable);
+		Page<ServicoEntity> servicosEncontrados = servicoRepository.findByDataEmissaoBetween(dataInicial, dataFim, pageable);
 
 		if (servicosEncontrados.isEmpty()) {
 			throw new NotFoundException("Nenhum serviço encontrado nesse periodo.");
