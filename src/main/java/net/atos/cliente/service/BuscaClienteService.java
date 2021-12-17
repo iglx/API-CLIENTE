@@ -19,12 +19,9 @@ import net.atos.cliente.repository.entity.PessoaEntity;
 @Service
 public class BuscaClienteService {	
 	
-	private Validator validator;
-	
 	private ClienteRepository clienteRepository;
 	
 	public BuscaClienteService(Validator v, ClienteRepository repository) {
-		this.validator = v;		
 		this.clienteRepository = repository; 	
 	}
 

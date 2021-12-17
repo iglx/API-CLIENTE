@@ -1,6 +1,5 @@
 package net.atos.cliente.service;
 
-import javax.validation.Validator;
 import javax.ws.rs.BadRequestException;
 
 import org.springframework.context.ApplicationEventPublisher;
@@ -14,7 +13,6 @@ import net.atos.cliente.repository.entity.PessoaEntity;
 @Service
 public class InativarClienteService {
 
-	private Validator validator;
 	private BuscaClienteService buscaClienteService;
 	private ApplicationEventPublisher eventPublisher;
 

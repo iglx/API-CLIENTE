@@ -137,7 +137,7 @@ public class PessoaVO {
 
 	public void addContato(ContatoVO contato) {
 		List<ContatoVO> contatosLocal =
-				Optional.ofNullable(this.getContatos()).orElseGet(() -> new ArrayList());
+				Optional.ofNullable(this.getContatos()).orElseGet(ArrayList::new);
 		contatosLocal.add(contato);
 		
 		this.contatos = contatosLocal;

@@ -3,7 +3,6 @@ package net.atos.cliente.service;
 import javax.validation.constraints.NotNull;
 
 import net.atos.cliente.domain.PessoaVO;
-import net.atos.cliente.domain.StatusEnum;
 import net.atos.cliente.domain.TipoPessoaEnum;
 
 public interface CriaCliente{

@@ -189,7 +189,7 @@ public class PessoaEntity implements Serializable {
 
 	public void addContato(ContatoEntity contato) {
 		List<ContatoEntity> contatosLocal =
-				Optional.ofNullable(this.getContatos()).orElseGet(() -> new ArrayList());
+				Optional.ofNullable(this.getContatos()).orElseGet(ArrayList::new);
 		contatosLocal.add(contato);
 		
 		this.contatos = contatosLocal;
