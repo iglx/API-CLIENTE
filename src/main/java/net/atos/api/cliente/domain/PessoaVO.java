@@ -1,4 +1,4 @@
-package net.atos.cliente.repository.entity;
+package net.atos.api.cliente.domain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,67 +6,47 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import net.atos.cliente.domain.Status;
-
-@Entity
-@Table(name = "TB_CLIENTE")
-public class ClienteEntity {
+public class PessoaVO {
 	
-	@Id
-	@Column(name = "ID_CADASTRO")
 	private Long id;
 	
-	@Column(name = "DT_CADASTRO")
 	@NotNull(message="Campo: cadastroData não pode ser nulo")
 	private LocalDate dataCadastro;
 	
-	@Column(name = "DT_ALTERACAO")
 	@NotNull(message="Campo: DataAlteracao não pode ser nulo")
 	private LocalDateTime dataAlteracao;
 	
-	@Column(name = "STATUS")
 	@NotNull(message="status do cliente não pode ser nulo")
-	@Enumerated(EnumType.STRING)
-	private Status status;
+	private StatusPessoaEnum statusPessoaEnum;
 	
-	@Column(name = "NOME")
+	@NotNull(message = "Campo TipoPessoa não pode ser nulo")
+	private TipoPessoaEnum tipoPessoaEnum;
+	
 	@NotNull(message="nome não pode ser nulo")
 	private String nome;
 	
-	@Column(name = "CPF")
-	@NotNull(message="cpf não pode ser nulo")
-	private String cpf;
-	
-	@Column(name = "EMAIL")
 	@NotNull(message="e-mail não pode ser nulo")
 	private String email;
 	
-	@Column(name = "NASCIMENTO")
 	@NotNull(message="nascimento não pode ser nulo")
 	private String nascimento;
 	
+	private String nrCpf;
+	
+	private String nrCnpj;	
+	
 	@NotNull(message = "Pelo menos um endereço deve ser cadastrado")
-	@Size(min = 1, message = "Pelo menos um endereço deve ser cadastrado")
 	@Valid
-	@OneToMany(mappedBy = "id.cliente")
-	private List<EnderecoEntity> enderecos;
+	private EnderecoVO endereco;
 	
 	@NotNull(message = "Pelo menos um número de contato deve ser cadastrado")
 	@Size(min = 1, message = "Pelo menos um número de contato deve ser cadastrado")
 	@Valid
-	@OneToMany(mappedBy = "id.cliente")
-	private List<ContatoEntity> contatos;
+	private List<ContatoVO> contatos;
 	
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
@@ -84,12 +64,12 @@ public class ClienteEntity {
 		this.dataAlteracao = dataAlteracao;
 	}
 
-	public Status getStatus() {
-		return status;
+	public StatusPessoaEnum getStatusPessoaEnum() {
+		return statusPessoaEnum;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatusPessoaEnum(StatusPessoaEnum statusPessoaEnum) {
+		this.statusPessoaEnum = statusPessoaEnum;
 	}
 
 	public String getNome() {
@@ -100,16 +80,24 @@ public class ClienteEntity {
 		this.nome = nome;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public String getEmail() {
 		return email;
+	}
+
+	public String getNrCpf() {
+		return nrCpf;
+	}
+
+	public void setNrCpf(String nrCpf) {
+		this.nrCpf = nrCpf;
+	}
+
+	public String getNrCnpj() {
+		return nrCnpj;
+	}
+
+	public void setNrCnpj(String nrCnpj) {
+		this.nrCnpj = nrCnpj;
 	}
 
 	public void setEmail(String email) {
@@ -132,36 +120,36 @@ public class ClienteEntity {
 		this.id = id;
 	}
 	
-	public List<EnderecoEntity> getEnderecos() {
-		return enderecos;
+	public EnderecoVO getEndereco() {
+		return endereco;
 	}
 
-	public void setEnderecos(List<EnderecoEntity> enderecos) {
-		this.enderecos = enderecos;
+	public void setEndereco(EnderecoVO endereco) {
+		this.endereco = endereco;
 	}
-	
-	public List<ContatoEntity> getContatos() {
+
+	public List<ContatoVO> getContatos() {
 		return contatos;
 	}
 
-	public void setContatos(List<ContatoEntity> contatos) {
+	public void setContatos(List<ContatoVO> contatos) {
 		this.contatos = contatos;
 	}
-
-	public void addEndereco(EnderecoEntity endereco) {
-		List<EnderecoEntity> enderecosLocal =
-				Optional.ofNullable(this.getEnderecos()).orElseGet(() -> new ArrayList());
-		enderecosLocal.add(endereco);
-		
-		this.enderecos = enderecosLocal;
+	
+	public TipoPessoaEnum getTipoPessoaEnum() {
+		return tipoPessoaEnum;
 	}
 
-	public void addContato(ContatoEntity contato) {
-		List<ContatoEntity> contatosLocal =
+	public void setTipoPessoaEnum(TipoPessoaEnum tipoPessoaEnum) {
+		this.tipoPessoaEnum = tipoPessoaEnum;
+	}
+
+	public void addContato(ContatoVO contato) {
+		List<ContatoVO> contatosLocal =
 				Optional.ofNullable(this.getContatos()).orElseGet(() -> new ArrayList());
 		contatosLocal.add(contato);
 		
 		this.contatos = contatosLocal;
 	}
-
+	
 }
