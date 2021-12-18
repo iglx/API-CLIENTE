@@ -121,7 +121,7 @@ public class PessoaController {
 		return ResponseEntity.ok(pessoaEncontrada);
 	}
 	
-	  @DeleteMapping(value = "/cliente/{id}")
+	  @DeleteMapping(value = "/deletar/{id}")
 	  @Operation(description = "Delete cliente por id")
 	    public ResponseEntity<Object> Delete(@PathVariable(value = "id") long id)
 	    {
