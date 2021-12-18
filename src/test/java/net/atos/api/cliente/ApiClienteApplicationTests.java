@@ -1,4 +1,4 @@
-package net.atos.cliente;
+package net.atos.api.cliente;
 
 //@SpringBootTest
 class ApiClienteApplicationTests {
