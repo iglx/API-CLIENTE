@@ -72,9 +72,7 @@ public class ClienteControllerIT {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
         assertNotNull(this.entityManager);
         
-
     }
-    
     
     @Test
     @DisplayName("Envio de pessoa sem os campos obrigatórios")

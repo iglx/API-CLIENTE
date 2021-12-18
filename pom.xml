@@ -255,6 +255,13 @@
 						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+                        <exclude>**/config/*/**</exclude>						
+						<exclude>**/listern/*/**</exclude>
+                        <exclude>**/*Application.*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 
 		</plugins>
