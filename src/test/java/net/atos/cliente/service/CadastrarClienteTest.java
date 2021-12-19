@@ -110,7 +110,7 @@ class CadastrarClienteTest {
 				));
 	}
 	
-//	@Test
+	@Test
 	@DisplayName("endereço não cadastrado")
 	public void test_endereco_null_lancarExcessao() {
 		
@@ -147,7 +147,7 @@ class CadastrarClienteTest {
 				));
 	}
 	
-//	@Test
+	@Test
 	@DisplayName("contato não cadastrado")
 	public void test_contato_null_lancarExcessao() {
 		
@@ -189,7 +189,7 @@ class CadastrarClienteTest {
 				));
 	}
 	
-//	@Test
+	@Test
 	@DisplayName("Campo data de cadastro atual")
 	public void test_data_diferente_lancaExcecao() {
 		
