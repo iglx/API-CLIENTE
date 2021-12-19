@@ -217,7 +217,7 @@ public class ClienteControllerIT {
 				PessoaVO.class);
     	
     	assertEquals(2, clienteConsultado.getContatos().size());
-    	assertEquals(TipoPessoaEnum.FISICA, clienteConsultado.getTipoPessoaEnum());
+    	assertEquals(TipoPessoaEnum.JURIDICA, clienteConsultado.getTipoPessoaEnum());
     }
     
     
@@ -432,7 +432,7 @@ public class ClienteControllerIT {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(pessoa))
     			).andDo(print())
-    			.andExpect(status().isOk());
+    			.andExpect(status().isMethodNotAllowed());
     }
     
     

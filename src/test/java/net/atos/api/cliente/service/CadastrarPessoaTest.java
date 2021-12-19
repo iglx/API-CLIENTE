@@ -1,4 +1,4 @@
-package net.atos.cliente.service;
+package net.atos.api.cliente.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
