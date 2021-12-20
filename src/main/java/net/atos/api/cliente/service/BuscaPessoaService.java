@@ -19,67 +19,55 @@ import net.atos.api.cliente.repository.PessoaRepository;
 import net.atos.api.cliente.repository.entity.PessoaEntity;
 
 @Service
-public class BuscaPessoaService {	
-	
+public class BuscaPessoaService {
+
 	private Validator validator;
-	
+
 	private PessoaRepository pessoaRepository;
-	
+
 	public BuscaPessoaService(Validator pValidator, PessoaRepository pessoaRepository) {
-		this.validator = pValidator;		
-		this.pessoaRepository = pessoaRepository; 	
-	}
-	
-public Page<PessoaVO>  porTodos(Pageable pageable) {
-		
-		Page<PessoaEntity> pessoaEntities = 
-				pessoaRepository.findAll(pageable);
-		
-		if(pessoaEntities.isEmpty()) {
-			throw new NotFoundException("Nenhum cliente para o periodo informado");	
-		}
-		
-		
-		return new PageImpl<>(pessoaEntities.getContent().stream()
-				.map(PessoaFactory::new)
-				.map(PessoaFactory::toVO)
-				.collect(Collectors.toList()),
-				pessoaEntities.getPageable(),
-				pessoaEntities.getTotalElements());		     	
+		this.validator = pValidator;
+		this.pessoaRepository = pessoaRepository;
 	}
 
-	public Page<PessoaVO>  porPeriodoDataCadastro(LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
-		
-		Page<PessoaEntity> pessoaEntities = 
-				pessoaRepository.findByDataCadastroBetween(dataInicio,dataFim, pageable);
-		
-		if(pessoaEntities.isEmpty()) {
-			throw new NotFoundException("Nenhum cliente para o periodo informado");	
+	public Page<PessoaVO> porTodos(Pageable pageable) {
+
+		Page<PessoaEntity> pessoaEntities = pessoaRepository.findAll(pageable);
+
+		if (pessoaEntities.isEmpty()) {
+			throw new NotFoundException("Nenhum cliente para o periodo informado");
 		}
-		
-		
-		return new PageImpl<>(pessoaEntities.getContent().stream()
-				.map(PessoaFactory::new)
-				.map(PessoaFactory::toVO)
-				.collect(Collectors.toList()),
-				pessoaEntities.getPageable(),
-				pessoaEntities.getTotalElements());		     	
+
+		return new PageImpl<>(pessoaEntities.getContent().stream().map(PessoaFactory::new).map(PessoaFactory::toVO)
+				.collect(Collectors.toList()), pessoaEntities.getPageable(), pessoaEntities.getTotalElements());
+	}
+
+	public Page<PessoaVO> porPeriodoDataCadastro(LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
+
+		Page<PessoaEntity> pessoaEntities = pessoaRepository.findByDataCadastroBetween(dataInicio, dataFim, pageable);
+
+		if (pessoaEntities.isEmpty()) {
+			throw new NotFoundException("Nenhum cliente para o periodo informado");
+		}
+
+		return new PageImpl<>(pessoaEntities.getContent().stream().map(PessoaFactory::new).map(PessoaFactory::toVO)
+				.collect(Collectors.toList()), pessoaEntities.getPageable(), pessoaEntities.getTotalElements());
 	}
 
 	public PessoaVO pessoaVOporId(long id) {
 		PessoaEntity pessoaEntity = this.pessoaRepository.findById(id)
-				.orElseThrow(()-> new NotFoundException("Não encontrada o cliente com id = "+id));
-		
+				.orElseThrow(() -> new NotFoundException("Não encontrada o cliente com id = " + id));
+
 		return new PessoaFactory(pessoaEntity).toVO();
-		
+
 	}
-	
+
 	public PessoaEntity pessoaEntityporId(long id) {
 		PessoaEntity pessoaEntity = this.pessoaRepository.findById(id)
-				.orElseThrow(()-> new NotFoundException("Não encontrada o cliente com id = "+id));
-		
+				.orElseThrow(() -> new NotFoundException("Não encontrada o cliente com id = " + id));
+
 		return new PessoaFactory(pessoaEntity).toEntity();
-		
+
 	}
 
 }

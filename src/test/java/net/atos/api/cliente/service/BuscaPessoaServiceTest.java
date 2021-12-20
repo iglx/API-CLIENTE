@@ -10,8 +10,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -31,7 +33,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import net.atos.api.cliente.domain.ContatoVO;
+import net.atos.api.cliente.domain.EnderecoVO;
 import net.atos.api.cliente.domain.PessoaVO;
+import net.atos.api.cliente.domain.StatusPessoaEnum;
+import net.atos.api.cliente.domain.TipoContatoEnum;
+import net.atos.api.cliente.domain.TipoPessoaEnum;
 import net.atos.api.cliente.repository.PessoaRepository;
 import net.atos.api.cliente.repository.entity.PessoaEntity;
 
@@ -62,32 +69,60 @@ public class BuscaPessoaServiceTest {
 		
 		this.pessoaRepository = Mockito.mock(PessoaRepository.class);
 		this.pageable = Mockito.mock(Pageable.class);
-		buscaPessoaService = new BuscaPessoaService(validator, pessoaRepository);	
+		this.buscaPessoaService = new BuscaPessoaService(validator, pessoaRepository);	
 	}
+	
+	
 	
 //	@Test	
 //	@DisplayName("Testa consultas de clientes.")	
 //	public void test_EncontraClientes_retornaLista(){
 //		
+//		PessoaVO pessoa =  new PessoaVO();
+//		pessoa.setId(null);
+//		pessoa.setDataCadastro(LocalDate.now());
+//		pessoa.setDataAlteracao(LocalDateTime.now());
+//		pessoa.setStatusPessoaEnum(StatusPessoaEnum.ATIVO);
+//		pessoa.setTipoPessoaEnum(TipoPessoaEnum.FISICA);
+//		pessoa.setNome("Adolfo teste");
+//		pessoa.setEmail("adolfo@gmail.com");
+//		pessoa.setNascimento("20/10/1980");
+//		pessoa.setNrCpf("111111111");
+//		pessoa.setNrCnpj(null);
+//		
+//		EnderecoVO endereco = new EnderecoVO();
+//		endereco.setLogradouro("Rua do Teste");
+//		endereco.setBairro("Torre");
+//		endereco.setCidade("Recife");
+//		endereco.setCep("5000000");
+//		endereco.setEstado("PE");
+//		endereco.setComplemento("1 Andar");
+//		
+//		pessoa.setEndereco(endereco);
+//		
+//		ContatoVO contato = new ContatoVO();
+//		contato.setTipoContato(TipoContatoEnum.CELULAR);
+//		contato.setNumero("(81) 9999999");
+//		pessoa.addContato(contato);
+//		
+//		contato.setTipoContato(TipoContatoEnum.RESIDENCIAL);
+//		contato.setNumero("(81) 3333333");
+//		pessoa.addContato(contato);
+//		
 //		assertNotNull(this.buscaPessoaService);
 //				
 //		List<PessoaVO> pessoaTreinadas = new ArrayList<>();
+//	//	pessoaTreinadas.add(pessoa);
 //		Page<PessoaVO> pessoaPaginadas = new PageImpl<PessoaVO>(pessoaTreinadas, this.pageable,01);
 //		
-//		when(this.buscaPessoaService.porTodos(pageable))
-//					.thenReturn(pessoaPaginadas);
+////		when(this.buscaPessoaService.porTodos(pageable))
+////					.thenReturn(pessoaPaginadas);
 //
-//		Page<PessoaVO> pessoasEncontradas = this.buscaPessoaService.porTodos(pageable);
+//		Page<PessoaVO> pessoasEncontradas = pessoaPaginadas;
 //		
-//		when(this.buscaPessoaService.porTodos(pageable))
-//		.thenReturn(pessoaPaginadas);
 //		
-//		var assertThrows = 
-//				assertThrows(NotFoundException.class, 
-//						()-> this.buscaPessoaService.porTodos(this.pageable));
-//		
-//		assertNotNull(assertThrows);
-//		assertEquals("Nenhuma cliente encontrado", assertThrows.getMessage());
+//		assertNotNull(List.of(pessoasEncontradas));
+////		assertEquals(3, notasEncontradas.getSize());
 //		
 //	}
 //	
@@ -112,31 +147,31 @@ public class BuscaPessoaServiceTest {
 //		assertEquals("Nenhuma cliente para o periodo informado", assertThrows.getMessage());
 //	}
 
-//	@Test	
-//	@DisplayName("Testa consultas cliente por periodo data cadastro.")	
-//	public void test_quandoEncontraCliPorPeriodoDTCadastro_retornaLista(){
-//		
-//		assertNotNull(this.buscaPessoaService);
-//		LocalDate dataInicio = LocalDate.now().minusDays(10l);
-//		LocalDate dataFim = LocalDate.now();
-//		
-//		List<PessoaEntity> pessoaTreinadas = new ArrayList<>();
-//		pessoaTreinadas.add(new PessoaEntity());
-//		pessoaTreinadas.add(new PessoaEntity());
-//		pessoaTreinadas.add(new PessoaEntity());
-//		Page<PessoaEntity> notasPaginadas = new PageImpl<>(pessoaTreinadas,this.pageable,0l);
-//		
-//		when(this.pessoaRepository.findByDataCadastroBetween(any(),any(),any()))
-//					.thenReturn(notasPaginadas);
-//		
-//		Page<PessoaVO> notasEncontradas = this.buscaPessoaService.porPeriodoDataCadastro(dataInicio, dataFim, this.pageable);
-//		
-//		then(this.pessoaRepository).should(times(1)).findByDataCadastroBetween(any(), any(),any());
-//		
-//		assertNotNull(notasEncontradas);
-//		assertEquals(3, notasEncontradas.getSize());
-//		
-//	}
+	@Test	
+	@DisplayName("Testa consultas cliente por periodo data cadastro.")	
+	public void test_quandoEncontraCliPorPeriodoDTCadastro_retornaLista(){
+		
+		assertNotNull(this.buscaPessoaService);
+		LocalDate dataInicio = LocalDate.now().minusDays(10l);
+		LocalDate dataFim = LocalDate.now();
+		
+		List<PessoaEntity> pessoaTreinadas = new ArrayList<>();
+		pessoaTreinadas.add(new PessoaEntity());
+		pessoaTreinadas.add(new PessoaEntity());
+		pessoaTreinadas.add(new PessoaEntity());
+		Page<PessoaEntity> notasPaginadas = new PageImpl<>(pessoaTreinadas,this.pageable,0l);
+		
+		when(this.pessoaRepository.findByDataCadastroBetween(any(),any(),pageable))
+					.thenReturn(notasPaginadas);
+		
+		Page<PessoaVO> notasEncontradas = this.buscaPessoaService.porPeriodoDataCadastro(dataInicio, dataFim, this.pageable);
+		
+		then(this.pessoaRepository).should(times(1)).findByDataCadastroBetween(any(), any(),pageable);
+		
+		assertNotNull(notasEncontradas);
+		assertEquals(3, notasEncontradas.getSize());
+		
+	}
 	
 	@Test	
 	@DisplayName("Testa Quando não encontra cliente por Id")	

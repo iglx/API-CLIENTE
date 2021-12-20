@@ -2,6 +2,9 @@ package net.atos.api.cliente.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MediaType;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -45,13 +49,14 @@ import net.atos.api.cliente.domain.PessoaVO;
 import net.atos.api.cliente.domain.StatusPessoaEnum;
 import net.atos.api.cliente.domain.TipoContatoEnum;
 import net.atos.api.cliente.domain.TipoPessoaEnum;
+import net.atos.api.cliente.repository.entity.PessoaEntity;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestPropertySource("classpath:application-test.properties")
 @ActiveProfiles("test")
-public class ClienteControllerIT {
+public class PessoaControllerIT {
 
 	private static final String URI_CLIENTE = "/v1/cliente";
 	
@@ -434,7 +439,7 @@ public class ClienteControllerIT {
     			).andDo(print())
     			.andExpect(status().isMethodNotAllowed());
     }
-    
+	  
     
     @Test    
     @DisplayName("Consulta cliente por periodo")
