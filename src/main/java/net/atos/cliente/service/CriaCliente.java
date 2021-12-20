@@ -2,8 +2,8 @@ package net.atos.cliente.service;
 
 import javax.validation.constraints.NotNull;
 
-import net.atos.cliente.domain.PessoaVO;
-import net.atos.cliente.domain.TipoPessoaEnum;
+import net.atos.api.cliente.domain.PessoaVO;
+import net.atos.api.cliente.domain.TipoPessoaEnum;
 
 public interface CriaCliente{
 	
