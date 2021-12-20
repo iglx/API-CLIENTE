@@ -16,6 +16,6 @@ services:
     ports:
       - 16432:5432
     environment:
-      POSTGRES_DB: nota_fiscal_db
+      POSTGRES_DB: cliente
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
