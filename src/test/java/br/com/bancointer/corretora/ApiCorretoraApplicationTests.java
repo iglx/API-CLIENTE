@@ -1,7 +1,7 @@
-package net.atos.api.cliente;
+package br.com.bancointer.corretora;
 
 //@SpringBootTest
-class ApiClienteApplicationTests {
+class ApiCorretoraApplicationTests {
 
 	//@Test
 	void contextLoads() {

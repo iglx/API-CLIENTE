@@ -1,13 +1,11 @@
-package net.atos.api.cliente.repository;
+package br.com.bancointer.corretora.repository;
 
-import java.util.Optional;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import net.atos.api.cliente.repository.entity.PessoaJuridicaEntity;
+import br.com.bancointer.corretora.entity.Ordem;
 
 @Repository
-public interface PessoaJuridicaRepository extends CrudRepository<PessoaJuridicaEntity, Long>{
-		
+public interface OrdemRepository extends JpaRepository<Ordem, Long> {
+
 }

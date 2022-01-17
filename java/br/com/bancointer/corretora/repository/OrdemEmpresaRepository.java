@@ -1,19 +1,11 @@
-package net.atos.api.cliente.repository;
+package br.com.bancointer.corretora.repository;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import net.atos.api.cliente.repository.entity.PessoaEntity;
+import br.com.bancointer.corretora.entity.OrdemEmpresa;
 
 @Repository
-public interface PessoaRepository extends PagingAndSortingRepository<PessoaEntity, Long>{
-	
-	public Page<PessoaEntity> findByDataCadastroBetween(LocalDate dataInicio, LocalDate dataFim, Pageable pageable);
-	
+public interface OrdemEmpresaRepository extends JpaRepository<OrdemEmpresa, Long> {
+
 }

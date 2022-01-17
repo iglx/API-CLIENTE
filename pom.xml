@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.6.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>net.atos.api</groupId>
 	<artifactId>cliente</artifactId>
@@ -39,6 +40,11 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -93,12 +99,12 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<version>2.13.0</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-devtools</artifactId>
-		    <optional>true</optional>
-		    <scope>runtime</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
@@ -255,11 +261,11 @@
 						</configuration>
 					</execution>
 				</executions>
-						<configuration>
+				<configuration>
 					<excludes>
-                        <exclude>**/config/*/**</exclude>						
-						<exclude>**/listern/*/**</exclude>
-                        <exclude>**/*Application.*</exclude>
+						<exclude>**/config/*/**</exclude>
+						<exclude>**/entity/*/**</exclude>
+						<exclude>**/*Application.*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

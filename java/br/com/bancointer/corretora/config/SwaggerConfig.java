@@ -1,4 +1,4 @@
-package net.atos.api.cliente.config;
+package br.com.bancointer.corretora.config;
 
 
 import org.springdoc.core.GroupedOpenApi;
@@ -35,12 +35,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	  @Bean
 	  public OpenAPI springShopOpenAPI() {
 	      return new OpenAPI()
-	              .info(new Info().title("Cliente API")
-	              .description("Criação de clientes")
+	              .info(new Info().title("Corretora API")
+	              .description("Api de investimento")
 	              .version("v0.0.1")
 	              .license(new License().name("Apache 2.0").url("http://springdoc.org")))
 	              .externalDocs(new ExternalDocumentation()
-	              .description("Cliente Documentação")
+	              .description("Corretora Documentação")
 	              .url("https://www.exemplo/docs"));
 	  }
 

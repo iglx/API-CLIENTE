@@ -1,4 +1,4 @@
-package net.atos.api.cliente.config;
+package br.com.bancointer.corretora.config;
 
 import java.util.ArrayList;
 import java.util.List;
